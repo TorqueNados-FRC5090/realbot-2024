@@ -53,6 +53,18 @@ public final class Constants {
         public static final int RR_ENCODER_ID = 53;
     }
 
+    public static final class IntakeIDs {
+        public static final int INTAKE_DRIVER_ID = 9;
+        public static final int INTAKE_ROTATOR_ID = 99;
+        public static final int LASER_ID = 0;
+    }
+
+    public static final class  ShooterIDs {
+        public static final int SHOOTER_LEFT_ID = 12;
+        public static final int SHOOTER_RIGHT_ID = 11;
+        
+    }
+
     /* -------------- SUBSYTEM CONSTANTS -------------- */
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
