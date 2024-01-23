@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
         }
         */
 
-        /*if(xbox.getBButton()){
+        if(xbox.getBButton()){
             shooter.shoot(.5);
         }
         else if(xbox.getAButton()){
@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
         }
         else if(xbox.getYButton()){
             shooter.shootOffset(.25, .5);
-        }*/
+        }
     }
 
     // This function is called every 20ms while the robot is enabled
