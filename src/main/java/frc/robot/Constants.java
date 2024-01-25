@@ -54,14 +54,14 @@ public final class Constants {
     }
 
     public static final class IntakeIDs {
-        public static final int INTAKE_DRIVER_ID = 9;
-        public static final int INTAKE_ROTATOR_ID = 99;
+        public static final int INTAKE_DRIVER_ID = 10;
+        public static final int INTAKE_ROTATOR_ID = 11;
         public static final int LASER_ID = 0;
     }
 
     public static final class  ShooterIDs {
         public static final int SHOOTER_LEFT_ID = 12;
-        public static final int SHOOTER_RIGHT_ID = 11;
+        public static final int SHOOTER_RIGHT_ID = 13;
         
     }
 
@@ -69,18 +69,18 @@ public final class Constants {
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
     public static final class SwerveModuleOffsets {
-        public static final double FL_OFFSET = -3;
-        public static final double FR_OFFSET = 108;
-        public static final double RL_OFFSET = 222;
-        public static final double RR_OFFSET = 160;
+        public static final double FL_OFFSET = 160;
+        public static final double FR_OFFSET = 222;
+        public static final double RL_OFFSET = 108;
+        public static final double RR_OFFSET = -3;
     }
 
     /** Whether or not each swerve component should be inverted/reversed */
     public static final class SwerveInversions {
         // Whether each driving motor should be inverted
         public static final boolean INVERT_FL_DRIVE = false;
-        public static final boolean INVERT_RL_DRIVE = false;
-        public static final boolean INVERT_FR_DRIVE = true;
+        public static final boolean INVERT_RL_DRIVE = true;
+        public static final boolean INVERT_FR_DRIVE = false;
         public static final boolean INVERT_RR_DRIVE = true;
 
         // Whether each turning motor should be inverted
