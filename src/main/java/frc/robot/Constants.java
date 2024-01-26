@@ -67,6 +67,24 @@ public final class Constants {
 
     /* -------------- SUBSYTEM CONSTANTS -------------- */
 
+    public static final class IntakeConstants {
+        public static enum IntakePosition{
+            PICKUP(0), 
+            CLIMB(0),
+            SHOOT(0);
+
+            private double angle;
+
+            IntakePosition(double angle) {
+                this.angle = angle;
+            }
+
+            public double getAngle() {
+                return angle;
+            }
+        }
+    }
+
     /** Turning a module to absolute 0 minus its offset will point it forward */
     public static final class SwerveModuleOffsets {
         public static final double FL_OFFSET = 160;
