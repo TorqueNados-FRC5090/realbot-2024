@@ -50,5 +50,13 @@ public class Intake {
         intakeMotor.set(0);
     }
     
+    public void intakeOut(double speed){
+        rotateMotor.set(speed);
+    }
+
+    public void intakeIn(double speed){
+        rotateMotor.set(speed);
+    }
+    
     
 }
