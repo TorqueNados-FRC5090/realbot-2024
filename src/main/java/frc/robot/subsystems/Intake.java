@@ -47,11 +47,8 @@ public class Intake {
         rotationPID.activate(pos.getAngle());
     }
 
-    public void intakeOut(double speed){
+    public void manualRotate(double speed){
         rotationMotor.set(speed);
     }
 
-    public void intakeIn(double speed){
-        rotationMotor.set(speed);
-    }
 }
