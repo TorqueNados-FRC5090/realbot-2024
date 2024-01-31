@@ -36,21 +36,21 @@ public final class Constants {
         3X for turning, 4X for driving, 5X for abs encoders. */
     public static final class SwerveIDs {
         // Front left module
-        public static final int FL_DRIVE_ID = 40;
-        public static final int FL_TURN_ID = 30;
-        public static final int FL_ENCODER_ID = 50;
+        public static final int FL_DRIVE_ID = 42;
+        public static final int FL_TURN_ID = 32;
+        public static final int FL_ENCODER_ID = 52;
         // Front right module
-        public static final int FR_DRIVE_ID = 41;
-        public static final int FR_TURN_ID = 31;
-        public static final int FR_ENCODER_ID = 51;
+        public static final int FR_DRIVE_ID = 40;
+        public static final int FR_TURN_ID = 30;
+        public static final int FR_ENCODER_ID = 50;
         // Rear left module
-        public static final int RL_DRIVE_ID = 42;
-        public static final int RL_TURN_ID = 32;
-        public static final int RL_ENCODER_ID = 52;
+        public static final int RL_DRIVE_ID = 43;
+        public static final int RL_TURN_ID = 33;
+        public static final int RL_ENCODER_ID = 53;
         // Rear right module
-        public static final int RR_DRIVE_ID = 43;
-        public static final int RR_TURN_ID = 33;
-        public static final int RR_ENCODER_ID = 53;
+        public static final int RR_DRIVE_ID = 41;
+        public static final int RR_TURN_ID = 31;
+        public static final int RR_ENCODER_ID = 51;
     }
 
     public static final class IntakeIDs {
@@ -89,10 +89,10 @@ public final class Constants {
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
     public static final class SwerveModuleOffsets {
-        public static final double FL_OFFSET = 160;
-        public static final double FR_OFFSET = 222;
-        public static final double RL_OFFSET = 108;
-        public static final double RR_OFFSET = -3;
+        public static final double FL_OFFSET = 347;
+        public static final double FR_OFFSET = 40;
+        public static final double RL_OFFSET = 288;
+        public static final double RR_OFFSET = 177;
     }
 
     /** Whether or not each swerve component should be inverted/reversed */
