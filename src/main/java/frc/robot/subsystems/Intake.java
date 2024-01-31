@@ -4,10 +4,12 @@ import static frc.robot.Constants.IntakeConstants.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.wrappers.GenericPID;
 import frc.robot.wrappers.LaserDetector;
 
@@ -24,7 +26,8 @@ public class Intake extends SubsystemBase{
         
         rotationMotor = new CANSparkMax(rotateID, MotorType.kBrushless);
         rotationMotor.restoreFactoryDefaults();
-        rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.2);
+        rotationMotor.setIdleMode(IdleMode.kBrake);
+        rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.06, ROTATION_MOTOR_RATIO);
 
         laser = new LaserDetector(laserPort);
     }
@@ -61,6 +64,6 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Rotation Position", rotationMotor.getEncoder().getPosition());
+        SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPositionNoRatio());
     }
 }

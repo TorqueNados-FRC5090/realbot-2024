@@ -69,8 +69,8 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static enum IntakePosition{
-            PICKUP(0), 
-            CLIMB(0),
+            PICKUP(200), 
+            CLIMB(90),
             SHOOT(0);
 
             private double angle;
@@ -84,7 +84,7 @@ public final class Constants {
             }
         }
 
-        public static final double ROTATION_MOTOR_RATIO = 0.0375;
+        public static final double ROTATION_MOTOR_RATIO = .1125;
     }
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
