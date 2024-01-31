@@ -1,15 +1,17 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.IntakeConstants.IntakePosition;
+import static frc.robot.Constants.IntakeConstants.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.wrappers.GenericPID;
 import frc.robot.wrappers.LaserDetector;
 
-public class Intake {
+public class Intake extends SubsystemBase{
     private CANSparkMax intakeMotor;
     private CANSparkMax rotationMotor;
     private LaserDetector laser; 
@@ -18,6 +20,7 @@ public class Intake {
     public Intake(int intakeID, int rotateID, int laserPort){
         intakeMotor = new CANSparkMax(intakeID, MotorType.kBrushless);
         intakeMotor.restoreFactoryDefaults();
+        intakeMotor.setInverted(true);
         
         rotationMotor = new CANSparkMax(rotateID, MotorType.kBrushless);
         rotationMotor.restoreFactoryDefaults();
@@ -31,7 +34,7 @@ public class Intake {
             intakeMotor.set(-speed);
         }
         else {
-            stop();
+            stopIntake();
         }
     }
 
@@ -39,11 +42,16 @@ public class Intake {
         intakeMotor.set(speed);
     }
 
-    public void stop(){
+    public void stopRotate(){
+        rotationPID.pause();
+        rotationMotor.set(0);
+    }
+        
+    public void stopIntake(){
         intakeMotor.set(0);
     }
 
-    public void goTo(IntakePosition pos){
+    public void goTo(IntakePosition pos) {
         rotationPID.activate(pos.getAngle());
     }
 
@@ -51,4 +59,8 @@ public class Intake {
         rotationMotor.set(speed);
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Rotation Position", rotationMotor.getEncoder().getPosition());
+    }
 }

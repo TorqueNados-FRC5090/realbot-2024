@@ -3,6 +3,7 @@ package frc.robot;
 // Import constants
 import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
+import static frc.robot.Constants.IntakeConstants.IntakePosition;
 import static frc.robot.Constants.ShooterIDs.*;
 
 // Command imports
@@ -81,9 +82,26 @@ public class RobotContainer {
         ejectBtn.whileTrue(new InstantCommand(() -> intake.eject(1)));
 
         Trigger intakeUpBtn = new Trigger(() -> operatorController.getPOV() == 0);
-        intakeUpBtn.whileTrue(new InstantCommand(() -> intake.manualRotate(.5)));
+        intakeUpBtn.onTrue(new InstantCommand(() -> intake.manualRotate(.2)));
+        intakeUpBtn.onFalse(new InstantCommand(() -> intake.stopRotate()));    
 
         Trigger intakeDownBtn = new Trigger(() -> operatorController.getPOV() == 180);
-        intakeDownBtn.whileTrue(new InstantCommand(() -> intake.manualRotate(.5)));
+        intakeDownBtn.onTrue(new InstantCommand(() -> intake.manualRotate(-.2)));
+        intakeDownBtn.onFalse(new InstantCommand(() -> intake.stopRotate()));
+
+        Trigger pickUpBtn = new Trigger(() -> operatorController.getAButton());
+        pickUpBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.PICKUP)));
+
+        Trigger climbBtn = new Trigger(() -> operatorController.getBButton());
+        climbBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.CLIMB)));
+
+        Trigger shootBtn = new Trigger(() -> operatorController.getYButton());
+        shootBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.SHOOT)));
+
+        Trigger stopIntakeBtn = new Trigger(() -> operatorController.getXButton());
+        stopIntakeBtn.onTrue(new InstantCommand(() -> intake.stopIntake()));
+
+        Trigger stopShootBtn = new Trigger(() -> operatorController.getStartButton());
+        stopShootBtn.onTrue(new InstantCommand(()-> shooter.stop()));
     }
 }
