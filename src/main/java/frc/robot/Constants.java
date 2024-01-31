@@ -83,6 +83,8 @@ public final class Constants {
                 return angle;
             }
         }
+
+        public static final double ROTATION_MOTOR_RATIO = 0.0375;
     }
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
