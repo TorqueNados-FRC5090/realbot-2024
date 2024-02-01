@@ -26,7 +26,7 @@ public class RobotContainer {
     private final XboxController operatorController = new XboxController(OPERATOR_PORT);
 
     private final SwerveDrivetrain drivetrain = new SwerveDrivetrain();
-    private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LASER_ID);
+    private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     private final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID);
     
     private final AutonContainer auton = new AutonContainer();

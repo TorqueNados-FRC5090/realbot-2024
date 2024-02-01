@@ -56,7 +56,7 @@ public final class Constants {
     public static final class IntakeIDs {
         public static final int INTAKE_DRIVER_ID = 10;
         public static final int INTAKE_ROTATOR_ID = 11;
-        public static final int INTAKE_LASER_ID = 0;
+        public static final int INTAKE_LIMIT_ID = 0;
     }
 
     public static final class  ShooterIDs {
