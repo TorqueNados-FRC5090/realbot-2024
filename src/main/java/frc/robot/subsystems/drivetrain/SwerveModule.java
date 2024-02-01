@@ -138,7 +138,7 @@ public class SwerveModule extends SubsystemBase {
 
     /** Set the turning motor's encoder to absolute zero */
     public void resetAngleToAbsolute() {
-        double angle = angleEncoder.getAbsolutePosition().getValueAsDouble() - angleOffset;
+        double angle = angleEncoder.getAbsolutePosition().getValueAsDouble() * 360 - angleOffset;
         turnEncoder.setPosition(angle);
     }
 
