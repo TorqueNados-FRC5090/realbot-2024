@@ -14,6 +14,7 @@ import frc.robot.commands.AutonContainer;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.drivetrain.SwerveDrivetrain;
 
 // Other imports
@@ -28,6 +29,7 @@ public class RobotContainer {
     private final SwerveDrivetrain drivetrain = new SwerveDrivetrain();
     private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LASER_ID);
     private final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID);
+    private final Blinkin blinkin = new Blinkin();
     
     private final AutonContainer auton = new AutonContainer();
     private final SendableChooser<Command> autonChooser = new SendableChooser<Command>();    
