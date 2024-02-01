@@ -62,6 +62,10 @@ public class Intake extends SubsystemBase{
         rotationMotor.set(speed);
     }
 
+    public boolean holdingPiece(){
+        return laser.isBlocked();
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPositionNoRatio());
