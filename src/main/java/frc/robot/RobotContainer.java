@@ -76,10 +76,12 @@ public class RobotContainer {
         fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(1)));
         
         Trigger intakeBtn = new Trigger(() -> operatorController.getLeftTriggerAxis() > .5); 
-        intakeBtn.whileTrue(new InstantCommand(() -> intake.intake(.3)));
+        intakeBtn.onTrue(new InstantCommand(() -> intake.intake(.3)));
+        intakeBtn.onFalse(new InstantCommand(() -> intake.stopIntake()));
 
         Trigger ejectBtn = new Trigger(() -> operatorController.getRightTriggerAxis() > .5);
-        ejectBtn.whileTrue(new InstantCommand(() -> intake.eject(1)));
+        ejectBtn.onTrue(new InstantCommand(() -> intake.eject(1)));
+        ejectBtn.onFalse(new InstantCommand(() -> intake.stopIntake()));
 
         Trigger intakeUpBtn = new Trigger(() -> operatorController.getPOV() == 0);
         intakeUpBtn.onTrue(new InstantCommand(() -> intake.manualRotate(.2)));
@@ -97,9 +99,6 @@ public class RobotContainer {
 
         Trigger shootBtn = new Trigger(() -> operatorController.getYButton());
         shootBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.SHOOT)));
-
-        Trigger stopIntakeBtn = new Trigger(() -> operatorController.getXButton());
-        stopIntakeBtn.onTrue(new InstantCommand(() -> intake.stopIntake()));
 
         Trigger stopShootBtn = new Trigger(() -> operatorController.getStartButton());
         stopShootBtn.onTrue(new InstantCommand(()-> shooter.stop()));
