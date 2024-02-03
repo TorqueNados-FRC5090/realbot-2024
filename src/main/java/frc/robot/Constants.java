@@ -89,18 +89,18 @@ public final class Constants {
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
     public static final class SwerveModuleOffsets {
-        public static final double FL_OFFSET = 347;
-        public static final double FR_OFFSET = 40;
-        public static final double RL_OFFSET = 288;
-        public static final double RR_OFFSET = 177;
+        public static final double FL_OFFSET = -20;
+        public static final double FR_OFFSET = -136.7;
+        public static final double RL_OFFSET = 110.1;
+        public static final double RR_OFFSET = 174.5;
     }
 
     /** Whether or not each swerve component should be inverted/reversed */
     public static final class SwerveInversions {
         // Whether each driving motor should be inverted
         public static final boolean INVERT_FL_DRIVE = false;
-        public static final boolean INVERT_RL_DRIVE = true;
-        public static final boolean INVERT_FR_DRIVE = false;
+        public static final boolean INVERT_RL_DRIVE = false;
+        public static final boolean INVERT_FR_DRIVE = true;
         public static final boolean INVERT_RR_DRIVE = true;
 
         // Whether each turning motor should be inverted
