@@ -2,6 +2,7 @@ package frc.robot.subsystems.drivetrain;
 
 // WPI imports
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // Motor related imports
@@ -253,5 +254,10 @@ public class SwerveModule extends SubsystemBase {
             newAngle += 360;
 
         return newAngle;
+    }
+     @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Module" + moduleNumber + "Position", getHeadingDegrees());
+        SmartDashboard.putNumber("Module" + moduleNumber + "Speed", getDriveMetersPerSecond());
     }
 }

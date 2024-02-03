@@ -13,7 +13,7 @@ import java.util.HashMap;
 // Gyro imports
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // Import constants
 import frc.robot.Constants.SwerveConstants.ModulePosition;
 import frc.robot.Constants.SwerveConstants;
@@ -284,5 +284,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     @Override // Called every 20ms
     public void periodic() {
         updateOdometry();
+        SmartDashboard.putNumber("Heading in Degrees", getHeadingDegrees());
+        SmartDashboard.putBoolean("Field Centric", isFieldCentric());
     }
 }

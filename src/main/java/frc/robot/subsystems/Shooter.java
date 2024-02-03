@@ -1,11 +1,17 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.wrappers.GenericPID;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Shooter {
     private CANSparkMax rightMotor;
     private CANSparkMax leftMotor;
+    private GenericPID shooterPID;
 
     public Shooter(int rightMotorID, int leftMotorID) {
         rightMotor = new CANSparkMax(rightMotorID, MotorType.kBrushless);
@@ -14,7 +20,16 @@ public class Shooter {
         leftMotor = new CANSparkMax(leftMotorID, MotorType.kBrushless);
         leftMotor.restoreFactoryDefaults();
         leftMotor.setInverted(true);
+
+        //shooterPID = new GenericPID(leftMotor, ControlType.kVelocity, getLeftMotorRPM());
+
+        SmartDashboard.putNumber("Left Motor RPM", getLeftMotorRPM());
+        SmartDashboard.putNumber("Right Motor RPM", getRightMotorRPM());
     }
+
+    public double getLeftMotorRPM() {return leftMotor.getEncoder().getVelocity(); }
+    public double getRightMotorRPM() {return rightMotor.getEncoder().getVelocity(); }
+
     /** shoots out a piece
      * @param speed speed of motors by %
      */
