@@ -30,6 +30,7 @@ public class Intake extends SubsystemBase{
         rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.06, ROTATION_MOTOR_RATIO);
 
         limitSwitch = new LimitSwitch(limPort);
+        limitSwitch.setInverted(true);
     }
 
     public void intake(double speed){  
