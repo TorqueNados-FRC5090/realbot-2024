@@ -9,14 +9,12 @@ public class IntakePickUp extends Command{
     
     public IntakePickUp(Intake intake){
         this.intake = intake;
+        addRequirements(intake);
+
+        this.beforeStarting(new SetIntakePosition(intake, IntakePosition.PICKUP));
+        this.andThen(new SetIntakePosition(intake, IntakePosition.SHOOT));
     }
-    /**
-     * goes to floor pickup position
-     */
-    @Override
-    public void initialize(){
-       intake.goTo(IntakePosition.PICKUP);
-    }  
+
     /**
      * Intake starts
      */
@@ -36,7 +34,7 @@ public class IntakePickUp extends Command{
      */
     @Override 
     public void end(boolean interrupted){
-        intake.goTo(IntakePosition.SHOOT);
+        intake.stopIntake();
     }
 
 }

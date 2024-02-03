@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonContainer;
+import frc.robot.commands.IntakePickUp;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -102,5 +103,8 @@ public class RobotContainer {
 
         Trigger stopShootBtn = new Trigger(() -> operatorController.getStartButton());
         stopShootBtn.onTrue(new InstantCommand(()-> shooter.stop()));
+
+        Trigger AutoIntakeBtn = new Trigger(() -> operatorController.getXButton());
+        AutoIntakeBtn.toggleOnTrue(new IntakePickUp(intake));
     }
 }

@@ -66,6 +66,10 @@ public class Intake extends SubsystemBase{
         return limitSwitch.isPressed();
     }
 
+    public boolean intakeAtSetPoint(){
+        rotationPID.activate();
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPosition());
