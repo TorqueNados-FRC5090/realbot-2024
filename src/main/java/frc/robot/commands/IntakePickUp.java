@@ -10,9 +10,11 @@ public class IntakePickUp extends Command{
     public IntakePickUp(Intake intake){
         this.intake = intake;
         addRequirements(intake);
+    } 
 
-        this.beforeStarting(new SetIntakePosition(intake, IntakePosition.PICKUP));
-        this.andThen(new SetIntakePosition(intake, IntakePosition.SHOOT));
+    @Override
+    public void initialize() {
+        intake.goTo(IntakePosition.PICKUP);
     }
 
     /**
@@ -27,13 +29,14 @@ public class IntakePickUp extends Command{
      */
     @Override 
     public boolean isFinished(){
-        return intake.holdingPiece();
+        return intake.holdingPiece() && intake.intakeAtSetPoint();
     }
     /** 
      * Intake goes to shoot position
      */
     @Override 
     public void end(boolean interrupted){
+        intake.goTo(IntakePosition.SHOOT);
         intake.stopIntake();
     }
 

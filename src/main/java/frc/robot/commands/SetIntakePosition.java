@@ -6,15 +6,19 @@ import frc.robot.subsystems.Intake;
 
 public class SetIntakePosition extends Command{
     private Intake intake;
+    private IntakePosition targetPosition;
 
     public  SetIntakePosition(Intake intake, IntakePosition targetPosition){
         this.intake = intake;
+
+        this.targetPosition = targetPosition;
+        
         addRequirements(intake);
     }
 
     @Override
     public void initialize(){
-        intake.goTo(IntakePosition.CLIMB);
+        intake.goTo(targetPosition);
     }
 
     @Override
