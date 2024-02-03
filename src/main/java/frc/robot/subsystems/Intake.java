@@ -68,6 +68,7 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPositionNoRatio());
+        SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPosition());
+        SmartDashboard.putBoolean("Intake Has Piece", holdingPiece());
     }
 }
