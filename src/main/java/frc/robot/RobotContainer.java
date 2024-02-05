@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonContainer;
+import frc.robot.commands.LimeDrive;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -62,6 +63,9 @@ public class RobotContainer {
         () -> driverController.getLeftX(),
         () -> driverController.getLeftY(),
         () -> driverController.getRightX()));
+        
+        Trigger limeDriveBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .05);
+        limeDriveBtn.whileTrue(new LimeDrive(drivetrain, shooterLimelight, -2));
     }
 
     private void setOperatorControls() {
