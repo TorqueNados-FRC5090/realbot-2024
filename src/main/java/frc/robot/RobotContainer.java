@@ -73,6 +73,9 @@ public class RobotContainer {
         Trigger resetHeadingBtn = new Trigger(() -> driverController.getStartButton());
         resetHeadingBtn.onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
         
+        Trigger toggleOrientationBtn = new Trigger(() -> driverController.getBackButton());
+        toggleOrientationBtn.onTrue(new InstantCommand(() -> drivetrain.toggleFieldCentric()));
+        
         Trigger limeDriveBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .05);
         limeDriveBtn.whileTrue(new LimeDrive(drivetrain, shooterLimelight, -2, false));
     }
