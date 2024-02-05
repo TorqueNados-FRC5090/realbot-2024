@@ -15,11 +15,11 @@ public class LimitSwitch {
     }
 
     /** @return true if the switch is being pressed */
-    public boolean isPressed() { return limSwitch.get() && !inverted; }
+    public boolean isPressed() { return limSwitch.get() ^ inverted; }
 
     /** @return true if the switch is not being pressed */
-    public boolean isNotPressed() { return limSwitch.get() && inverted; }
+    public boolean isNotPressed() { return !limSwitch.get() ^ inverted; }
 
-    /**  */
+    /** Inverts the outputs from the limit switch */
     public void setInverted(boolean invert) { inverted = invert; }
 }
