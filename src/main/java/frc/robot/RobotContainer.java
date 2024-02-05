@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonContainer;
+import frc.robot.commands.IntakePickUp;
+import frc.robot.commands.SetIntakePosition;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -26,7 +28,7 @@ public class RobotContainer {
     private final XboxController operatorController = new XboxController(OPERATOR_PORT);
 
     private final SwerveDrivetrain drivetrain = new SwerveDrivetrain();
-    private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LASER_ID);
+    private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     private final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID);
     
     private final AutonContainer auton = new AutonContainer();
@@ -92,15 +94,18 @@ public class RobotContainer {
         intakeDownBtn.onFalse(new InstantCommand(() -> intake.stopRotate()));
 
         Trigger pickUpBtn = new Trigger(() -> operatorController.getAButton());
-        pickUpBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.PICKUP)));
+        pickUpBtn.onTrue(new SetIntakePosition(intake, IntakePosition.PICKUP));
 
         Trigger climbBtn = new Trigger(() -> operatorController.getBButton());
-        climbBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.CLIMB)));
+        climbBtn.onTrue(new SetIntakePosition(intake, IntakePosition.CLIMB));
 
         Trigger shootBtn = new Trigger(() -> operatorController.getYButton());
-        shootBtn.onTrue(new InstantCommand(() -> intake.goTo(IntakePosition.SHOOT)));
+        shootBtn.onTrue(new SetIntakePosition(intake, IntakePosition.SHOOT));
 
         Trigger stopShootBtn = new Trigger(() -> operatorController.getStartButton());
         stopShootBtn.onTrue(new InstantCommand(()-> shooter.stop()));
+
+        Trigger AutoIntakeBtn = new Trigger(() -> operatorController.getXButton());
+        AutoIntakeBtn.toggleOnTrue(new IntakePickUp(intake));
     }
 }
