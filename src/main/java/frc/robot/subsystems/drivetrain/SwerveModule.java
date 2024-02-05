@@ -36,7 +36,6 @@ public class SwerveModule extends SubsystemBase {
     private PIDController turnController;
     private CANcoder angleEncoder;
     private double angleOffset;
-    private double m_lastAngle;
     private Pose2d pose;
 
     /**
@@ -183,15 +182,9 @@ public class SwerveModule extends SubsystemBase {
                 DRIVE_PID_SLOT
             );
         }
-
-        // Get the angle to turn the module to
-        double angle =
-            (Math.abs(state.speedMetersPerSecond) <= (MAX_TRANSLATION_SPEED * 0.01))
-                ? m_lastAngle
-                : state.angle.getDegrees(); // Prevent rotating module if speed is less than 1%. Prevents Jittering.
     
         // Point turning motor at the target angle
-        turnTo(angle);
+        turnTo(state.angle.getDegrees());
     }
 
     /** Turn the module to point in some direction
@@ -203,7 +196,7 @@ public class SwerveModule extends SubsystemBase {
 
         double pidOut = turnController.calculate(turnEncoder.getPosition(), angle);
         // if robot is not moving, stop the turn motor oscillating
-        if (turnAngleError < .5 && Math.abs(state.speedMetersPerSecond) <= 0.03)
+        if (turnAngleError < .5 && Math.abs(state.speedMetersPerSecond) <= MAX_TRANSLATION_SPEED * .01)
             pidOut = 0;
 
         turnMotor.setVoltage(pidOut * RobotController.getBatteryVoltage());
