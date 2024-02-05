@@ -12,10 +12,12 @@ public class LimeDrive extends Command {
     private final boolean originalOrientation;
     private final Limelight limelight;
     private final double goalDistance;
-
+    
     private final PIDController driveControllerX;
     private final PIDController driveControllerY;
     private final PIDController headingController;
+    
+    private boolean ends;
 
     /** Constructs a LimeDrive command
      * 
@@ -28,6 +30,7 @@ public class LimeDrive extends Command {
         originalOrientation = drivetrain.isFieldCentric();
         this.limelight = limelight;
         this.goalDistance = goalDistance;
+        this.ends = true;
 
         // Configure PID Controllers for each axis of movement
         driveControllerX = new PIDController(.7, 0, 0);
@@ -41,6 +44,18 @@ public class LimeDrive extends Command {
         headingController.enableContinuousInput(-180, 180); // -180 and 180 are the same heading
 
         addRequirements(drivetrain);
+    }
+
+    /** Constructs a LimeDrive command
+     * 
+     *  @param drivetrain The drivetrain that will be driven by this command
+     *  @param limelight The limelight camera that will be used for tracking
+     *  @param goalDistance How far away from the target the robot should be at the end of the command
+     *  @param ends Whether the command should end when the robot has reached its destination
+     */
+    public LimeDrive(SwerveDrivetrain drivetrain, Limelight limelight, double goalDistance, boolean ends) { 
+        this(drivetrain, limelight, goalDistance);
+        this.ends = ends;
     }
 
     // Called once when command is first scheduled.
@@ -87,7 +102,8 @@ public class LimeDrive extends Command {
     public boolean isFinished() {
         return driveControllerX.atSetpoint() &&
                driveControllerY.atSetpoint() &&
-               headingController.atSetpoint();
+               headingController.atSetpoint() &&
+               ends;
     }
 
     

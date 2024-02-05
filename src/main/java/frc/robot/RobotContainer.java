@@ -65,7 +65,7 @@ public class RobotContainer {
         () -> driverController.getRightX()));
         
         Trigger limeDriveBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .05);
-        limeDriveBtn.whileTrue(new LimeDrive(drivetrain, shooterLimelight, -2));
+        limeDriveBtn.whileTrue(new LimeDrive(drivetrain, shooterLimelight, -2, false));
     }
 
     private void setOperatorControls() {
