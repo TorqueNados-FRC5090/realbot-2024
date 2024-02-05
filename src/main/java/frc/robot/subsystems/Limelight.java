@@ -32,7 +32,10 @@ public class Limelight extends SubsystemBase {
     /** @return the position and rotation of the robot relative to the primary in-view target. 
      * This is returned as an array: [X,Y,Z,Roll,Pitch,Yaw] */
     public double[] getBotPoseTarget() { return table.getEntry("botpose_targetspace").getDoubleArray(new double[6]); }
-
+    /** @return the position and rotation of the primary in-view target relative to the robot. 
+     * This is returned as an array: [X,Y,Z,Roll,Pitch,Yaw] */
+    public double[] getTargetPose() { return table.getEntry("targetpose_robotspace").getDoubleArray(new double[6]); }
+    
     /** @param pipeNum The number of the pipeline to use */
     public void setPipeline(int pipeNum) { table.getEntry("pipeline").setNumber(pipeNum); }
     /** @param on Whether the LEDs should be turned on */
