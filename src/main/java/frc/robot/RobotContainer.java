@@ -64,6 +64,9 @@ public class RobotContainer {
 
         Trigger lockBtn = new Trigger(() -> driverController.getXButton());
         lockBtn.whileTrue(new LockDrivetrain(drivetrain));
+
+        Trigger resetHeadingBtn = new Trigger(() -> driverController.getStartButton());
+        resetHeadingBtn.onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
     }
 
     private void setOperatorControls() {
