@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonContainer;
+import frc.robot.commands.LockDrivetrain;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -60,6 +61,9 @@ public class RobotContainer {
         () -> driverController.getLeftX(),
         () -> driverController.getLeftY(),
         () -> driverController.getRightX()));
+
+        Trigger lockBtn = new Trigger(() -> driverController.getXButton());
+        lockBtn.whileTrue(new LockDrivetrain(drivetrain));
     }
 
     private void setOperatorControls() {
