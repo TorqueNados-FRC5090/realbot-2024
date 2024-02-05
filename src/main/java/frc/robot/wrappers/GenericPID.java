@@ -95,6 +95,7 @@ public class GenericPID {
     public double getI() { return controller.getI(); }
     public double getD() { return controller.getD(); }
     public double getSetpoint() { return setpoint/ratio; }
+    public double getSetpointNoRatio() { return setpoint; }
     public CANSparkMax.ControlType getControlType() { return controlType; }
     public double getRPM() { return motor.getEncoder().getVelocity(); }
     public double getPositionNoRatio() { return motor.getEncoder().getPosition(); }
@@ -103,6 +104,7 @@ public class GenericPID {
     public double getMax() { return max; }
     public SparkPIDController getController() { return controller; }
     public CANSparkMax getMotor() { return motor; }
+    public boolean isAtSetpoint() { return Math.abs(getPosition() - getSetpoint()) < getSetpoint() * .025; }
 
     // Setter Methods
     public void setP(double P) { this.P = P; controller.setP(P); }

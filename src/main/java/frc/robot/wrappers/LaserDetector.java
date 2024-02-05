@@ -6,9 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class LaserDetector {
     private DigitalInput laser;
 
-    /** 
-     * Constructs LaserDetector object 
-     * 
+    /** Constructs LaserDetector object 
      * @param port The number of the DIO port being used
      */
     public LaserDetector(int port) {

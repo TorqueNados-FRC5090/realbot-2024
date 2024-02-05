@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.wrappers.GenericPID;
-import frc.robot.wrappers.LaserDetector;
+import frc.robot.wrappers.LimitSwitch;
 
 public class Intake extends SubsystemBase{
     private CANSparkMax intakeMotor;
     private CANSparkMax rotationMotor;
-    private LaserDetector laser; 
     private GenericPID rotationPID;
+    private LimitSwitch limitSwitch;
 
-    public Intake(int intakeID, int rotateID, int laserPort){
+    public Intake(int intakeID, int rotateID, int limPort){
         intakeMotor = new CANSparkMax(intakeID, MotorType.kBrushless);
         intakeMotor.restoreFactoryDefaults();
         intakeMotor.setInverted(true);
@@ -29,11 +29,12 @@ public class Intake extends SubsystemBase{
         rotationMotor.setIdleMode(IdleMode.kBrake);
         rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.06, ROTATION_MOTOR_RATIO);
 
-        laser = new LaserDetector(laserPort);
+        limitSwitch = new LimitSwitch(limPort);
+        limitSwitch.setInverted(true);
     }
 
     public void intake(double speed){  
-        if(laser.isOpen()) {
+        if(limitSwitch.isNotPressed()) {
             intakeMotor.set(-speed);
         }
         else {
@@ -62,8 +63,17 @@ public class Intake extends SubsystemBase{
         rotationMotor.set(speed);
     }
 
+    public boolean holdingPiece(){
+        return limitSwitch.isPressed();
+    }
+
+    public boolean intakeAtSetPoint(){
+        return rotationPID.isAtSetpoint();
+    }
+
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPositionNoRatio());
+        SmartDashboard.putNumber("Intake Position Degrees", rotationPID.getPosition());
+        SmartDashboard.putBoolean("Intake Has Piece", holdingPiece());
     }
 }
