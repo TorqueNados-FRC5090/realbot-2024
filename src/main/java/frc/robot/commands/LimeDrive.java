@@ -2,11 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.drivetrain.SwerveDrivetrain;
 
+// Drives the robot to a target tracked by limelight
 public class LimeDrive extends Command {
     private final SwerveDrivetrain drivetrain;
     private final boolean originalOrientation;
@@ -17,13 +17,19 @@ public class LimeDrive extends Command {
     private final PIDController driveControllerY;
     private final PIDController headingController;
 
-    /**  */
+    /** Constructs a LimeDrive command
+     * 
+     *  @param drivetrain The drivetrain that will be driven by this command
+     *  @param limelight The limelight camera that will be used for tracking
+     *  @param goalDistance How far away from the target the robot should be at the end of the command
+     */
     public LimeDrive(SwerveDrivetrain drivetrain, Limelight limelight, double goalDistance) {
         this.drivetrain = drivetrain;
         originalOrientation = drivetrain.isFieldCentric();
         this.limelight = limelight;
         this.goalDistance = goalDistance;
 
+        // Configure PID Controllers for each axis of movement
         driveControllerX = new PIDController(.7, 0, 0);
         driveControllerX.setTolerance(.1); // Allow for 5 centimeters of positional error
 
@@ -40,12 +46,14 @@ public class LimeDrive extends Command {
     // Called once when command is first scheduled.
     @Override
     public void initialize() {
+        // This command should drive using robot centric movement
         drivetrain.setFieldCentric(false);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        // Do nothing if there is no valid target
         if (!limelight.hasValidTarget()) {
             drivetrain.drive(0, 0, 0);
             return;
@@ -56,7 +64,6 @@ public class LimeDrive extends Command {
         double targetX = targetpose[0];
         double targetDist = targetpose[2];
         double targetAngle = targetpose[4];
-
 
         // Preprocess the driving instructions
         double xRawOutput = driveControllerX.calculate(targetX, 0);
@@ -72,32 +79,21 @@ public class LimeDrive extends Command {
         double rotation = MathUtil.applyDeadband(rotClamped, .01);
                
         // Send the instructions to the drivetrain
-        drivetrain.sendDrive(x, y, rotation, true);
-
-        SmartDashboard.putNumber("X Input", targetX);
-        SmartDashboard.putNumber("Y Input", targetDist);
-        SmartDashboard.putNumber("Rot Input", targetAngle);
-
-        SmartDashboard.putNumber("X Output", x);
-        SmartDashboard.putNumber("Y Output", y);
-        SmartDashboard.putNumber("Rot Output", rotation);
-
-        SmartDashboard.putBoolean("X at Target", driveControllerX.atSetpoint());
-        SmartDashboard.putBoolean("Y at Target", driveControllerY.atSetpoint());
-        SmartDashboard.putBoolean("Rot at Target", headingController.atSetpoint());
+        drivetrain.sendDrive(x, y, rotation, true); 
     }
 
-    // Command ends when robot is at its destination
-    @Override
+    
+    @Override // Command ends when robot has reached its destination
     public boolean isFinished() {
         return driveControllerX.atSetpoint() &&
                driveControllerY.atSetpoint() &&
                headingController.atSetpoint();
     }
 
-    // Runs when the command ends
-    @Override
+    
+    @Override // Runs when the command ends
     public void end(boolean interrupted) {
+        // Return to whatever orientation was being used when the command started
         drivetrain.setFieldCentric(originalOrientation);
     }
 }
