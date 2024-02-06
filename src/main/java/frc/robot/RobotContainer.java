@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AlwaysIntake;
 import frc.robot.commands.AutonContainer;
+import frc.robot.commands.Eject;
 import frc.robot.commands.LimeDrive;
 import frc.robot.commands.IntakePickUp;
 import frc.robot.commands.SetIntakePosition;
@@ -90,8 +91,7 @@ public class RobotContainer {
         fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(1)));
 
         Trigger ejectBtn = new Trigger(() -> operatorController.getRightTriggerAxis() > .5);
-        ejectBtn.onTrue(new InstantCommand(() -> intake.eject(1)));
-        ejectBtn.onFalse(new InstantCommand(() -> intake.stopIntake()));
+        ejectBtn.whileTrue( new Eject(intake));
 
         Trigger intakeUpBtn = new Trigger(() -> operatorController.getPOV() == 0);
         intakeUpBtn.onTrue(new InstantCommand(() -> intake.manualRotate(.2)));
