@@ -255,9 +255,12 @@ public class SwerveModule extends SubsystemBase {
 
         return newAngle;
     }
-     @Override
+
+    @Override // Called every 20ms
     public void periodic() {
+        // Prints the position of the swerve module heading in degrees
         SmartDashboard.putNumber("Module" + moduleNumber + "Position", getHeadingDegrees());
+        // Prints the speed of the swerve module 
         SmartDashboard.putNumber("Module" + moduleNumber + "Speed", getDriveMetersPerSecond());
     }
 }

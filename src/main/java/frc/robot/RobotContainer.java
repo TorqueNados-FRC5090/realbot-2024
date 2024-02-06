@@ -72,10 +72,10 @@ public class RobotContainer {
         // then intake up will be up on D-pad and down be down on the Dpad  
 
         Trigger halfShooterBtn = new Trigger(() -> operatorController.getLeftBumper());
-        halfShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(.5)));
+        halfShooterBtn.whileTrue(new InstantCommand(() -> shooter.shootRPM(2500)));
 
         Trigger fullShooterBtn = new Trigger(() -> operatorController.getRightBumper());
-        fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(1)));
+        fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shootRPM(5000)));
         
         Trigger intakeBtn = new Trigger(() -> operatorController.getLeftTriggerAxis() > .5); 
         intakeBtn.whileTrue(new InstantCommand(() -> intake.intake(.3)));

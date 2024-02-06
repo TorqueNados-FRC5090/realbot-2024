@@ -284,7 +284,9 @@ public class SwerveDrivetrain extends SubsystemBase {
     @Override // Called every 20ms
     public void periodic() {
         updateOdometry();
+        // Prints the current heading in degrees
         SmartDashboard.putNumber("Heading in Degrees", getHeadingDegrees());
+        // Prints if the robot is in field or robot
         SmartDashboard.putBoolean("Field Centric", isFieldCentric());
     }
 }
