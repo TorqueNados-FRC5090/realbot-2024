@@ -10,6 +10,7 @@ import static frc.robot.Constants.ShooterIDs.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AlwaysIntake;
 import frc.robot.commands.AutonContainer;
 import frc.robot.commands.LimeDrive;
 import frc.robot.commands.IntakePickUp;
@@ -40,9 +41,10 @@ public class RobotContainer {
     /** Constructs a RobotContainer */
     public RobotContainer() {
         initChooser();
-
+        
         setDriverControls();
         setOperatorControls();
+        setIntakeOn();
     }
 
     /** Initialize the auton selector on the dashboard */
@@ -65,11 +67,15 @@ public class RobotContainer {
         () -> driverController.getLeftX(),
         () -> driverController.getLeftY(),
         () -> driverController.getRightX()));
+
+    
         
         Trigger limeDriveBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .05);
         limeDriveBtn.whileTrue(new LimeDrive(drivetrain, shooterLimelight, -2, false));
     }
-
+    private void setIntakeOn(){
+        intake.setDefaultCommand(new AlwaysIntake(intake));
+    }
     private void setOperatorControls() {
         // use the xbox controller shooter half speed left bumber
         // full speed right bumber 
@@ -82,10 +88,6 @@ public class RobotContainer {
 
         Trigger fullShooterBtn = new Trigger(() -> operatorController.getRightBumper());
         fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(1)));
-        
-        Trigger intakeBtn = new Trigger(() -> operatorController.getLeftTriggerAxis() > .5); 
-        intakeBtn.onTrue(new InstantCommand(() -> intake.intake(.3)));
-        intakeBtn.onFalse(new InstantCommand(() -> intake.stopIntake()));
 
         Trigger ejectBtn = new Trigger(() -> operatorController.getRightTriggerAxis() > .5);
         ejectBtn.onTrue(new InstantCommand(() -> intake.eject(1)));
