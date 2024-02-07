@@ -20,6 +20,7 @@ import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.drivetrain.SwerveDrivetrain;
 
 // Other imports
@@ -34,6 +35,7 @@ public class RobotContainer {
     private final SwerveDrivetrain drivetrain = new SwerveDrivetrain();
     private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     private final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID);
+    private final Blinkin blinkin = new Blinkin();
     private final Limelight shooterLimelight = new Limelight("limelight-pbshoot");
     
     private final AutonContainer auton = new AutonContainer();
@@ -85,10 +87,10 @@ public class RobotContainer {
         // then intake up will be up on D-pad and down be down on the Dpad  
 
         Trigger halfShooterBtn = new Trigger(() -> operatorController.getLeftBumper());
-        halfShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(.5)));
+        halfShooterBtn.onTrue(new InstantCommand(() -> shooter.setSpeed(2500)));
 
         Trigger fullShooterBtn = new Trigger(() -> operatorController.getRightBumper());
-        fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shoot(1)));
+        fullShooterBtn.onTrue(new InstantCommand(() -> shooter.setSpeed(5000)));
 
         Trigger ejectBtn = new Trigger(() -> operatorController.getRightTriggerAxis() > .5);
         ejectBtn.whileTrue( new Eject(intake));
