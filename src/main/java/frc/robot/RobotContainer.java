@@ -10,10 +10,12 @@ import static frc.robot.Constants.ShooterIDs.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.intake_commands.IntakePiece;
 import frc.robot.commands.AutonContainer;
+import frc.robot.commands.intake_commands.Eject;
 import frc.robot.commands.LimeDrive;
-import frc.robot.commands.IntakePickUp;
-import frc.robot.commands.SetIntakePosition;
+import frc.robot.commands.intake_commands.IntakeAutoPickup;
+import frc.robot.commands.intake_commands.SetIntakePosition;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -42,9 +44,10 @@ public class RobotContainer {
     /** Constructs a RobotContainer */
     public RobotContainer() {
         initChooser();
-
+        
         setDriverControls();
         setOperatorControls();
+        setDefaultCommands();
     }
 
     /** Initialize the auton selector on the dashboard */
@@ -59,6 +62,11 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return autonChooser.getSelected();
+    }
+
+    private void setDefaultCommands() {
+        // Set the intake to always be intaking by default
+        intake.setDefaultCommand(new IntakePiece(intake));
     }
 
     private void setDriverControls() {
@@ -80,18 +88,13 @@ public class RobotContainer {
         // then intake up will be up on D-pad and down be down on the Dpad  
 
         Trigger halfShooterBtn = new Trigger(() -> operatorController.getLeftBumper());
-        halfShooterBtn.whileTrue(new InstantCommand(() -> shooter.setSpeed(2500)));
+        halfShooterBtn.onTrue(new InstantCommand(() -> shooter.setSpeed(2500)));
 
         Trigger fullShooterBtn = new Trigger(() -> operatorController.getRightBumper());
-        fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.setSpeed(5000)));
-        
-        Trigger intakeBtn = new Trigger(() -> operatorController.getLeftTriggerAxis() > .5); 
-        intakeBtn.onTrue(new InstantCommand(() -> intake.intake(.3)));
-        intakeBtn.onFalse(new InstantCommand(() -> intake.stopIntake()));
+        fullShooterBtn.onTrue(new InstantCommand(() -> shooter.setSpeed(5000)));
 
         Trigger ejectBtn = new Trigger(() -> operatorController.getRightTriggerAxis() > .5);
-        ejectBtn.onTrue(new InstantCommand(() -> intake.eject(1)));
-        ejectBtn.onFalse(new InstantCommand(() -> intake.stopIntake()));
+        ejectBtn.whileTrue( new Eject(intake));
 
         Trigger intakeUpBtn = new Trigger(() -> operatorController.getPOV() == 0);
         intakeUpBtn.onTrue(new InstantCommand(() -> intake.manualRotate(.2)));
@@ -114,6 +117,6 @@ public class RobotContainer {
         stopShootBtn.onTrue(new InstantCommand(()-> shooter.stop()));
 
         Trigger AutoIntakeBtn = new Trigger(() -> operatorController.getXButton());
-        AutoIntakeBtn.toggleOnTrue(new IntakePickUp(intake));
+        AutoIntakeBtn.toggleOnTrue(new IntakeAutoPickup(intake));
     }
 }
