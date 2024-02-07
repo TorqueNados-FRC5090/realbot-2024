@@ -33,11 +33,8 @@ public class RobotContainer {
     private final SwerveDrivetrain drivetrain = new SwerveDrivetrain();
     private final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     private final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID);
-<<<<<<< HEAD
     private final Blinkin blinkin = new Blinkin();
-=======
     private final Limelight shooterLimelight = new Limelight("limelight-pbshoot");
->>>>>>> 44d5d1f9175249b3ff7b205863dd0532cc5e96cd
     
     private final AutonContainer auton = new AutonContainer();
     private final SendableChooser<Command> autonChooser = new SendableChooser<Command>();    
@@ -83,10 +80,10 @@ public class RobotContainer {
         // then intake up will be up on D-pad and down be down on the Dpad  
 
         Trigger halfShooterBtn = new Trigger(() -> operatorController.getLeftBumper());
-        halfShooterBtn.whileTrue(new InstantCommand(() -> shooter.shootRPM(2500)));
+        halfShooterBtn.whileTrue(new InstantCommand(() -> shooter.setSpeed(2500)));
 
         Trigger fullShooterBtn = new Trigger(() -> operatorController.getRightBumper());
-        fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.shootRPM(5000)));
+        fullShooterBtn.whileTrue(new InstantCommand(() -> shooter.setSpeed(5000)));
         
         Trigger intakeBtn = new Trigger(() -> operatorController.getLeftTriggerAxis() > .5); 
         intakeBtn.onTrue(new InstantCommand(() -> intake.intake(.3)));
