@@ -107,9 +107,9 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
 
 
-    /** 
-     * Drives the robot
-     *  
+    /** Drives the robot. This is best used for driving with joysticks.
+     *  For programmatic drivetrain control, consider using sendDrive instead. 
+     * 
      * @param inputX The left/right translation instruction
      * @param inputY The forward/back translation instruction
      * @param inputRot The rotational instruction
@@ -139,8 +139,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         sendDrive(slewedX, slewedY, slewedRot, true);
     }
 
-    /** 
-     * Sends instructions to the motors that drive the robot
+    /** Sends driving instructions to the motors that drive the robot.
      *  
      * @param translationX The left/right translation instruction
      * @param translationY The forward/back translation instruction
@@ -148,7 +147,7 @@ public class SwerveDrivetrain extends SubsystemBase {
      * @param isOpenLoop True to control the driving motor via %power.
      *                   False to control the driving motor via velocity-based PID.
     */
-    private void sendDrive( double translationX, double translationY, double rotation, boolean isOpenLoop ) {
+    public void sendDrive( double translationX, double translationY, double rotation, boolean isOpenLoop ) {
         // Convert inputs from % to m/sec
         translationY *= MAX_TRANSLATION_SPEED;
         translationX *= MAX_TRANSLATION_SPEED;
