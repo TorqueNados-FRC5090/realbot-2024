@@ -10,12 +10,12 @@ import static frc.robot.Constants.ShooterIDs.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AlwaysIntake;
+import frc.robot.commands.intake_commands.IntakePiece;
 import frc.robot.commands.AutonContainer;
-import frc.robot.commands.Eject;
+import frc.robot.commands.intake_commands.Eject;
 import frc.robot.commands.LimeDrive;
-import frc.robot.commands.IntakePickUp;
-import frc.robot.commands.SetIntakePosition;
+import frc.robot.commands.intake_commands.IntakeAutoPickup;
+import frc.robot.commands.intake_commands.SetIntakePosition;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -66,7 +66,7 @@ public class RobotContainer {
 
     private void setDefaultCommands() {
         // Set the intake to always be intaking by default
-        intake.setDefaultCommand(new AlwaysIntake(intake));
+        intake.setDefaultCommand(new IntakePiece(intake));
     }
 
     private void setDriverControls() {
@@ -117,6 +117,6 @@ public class RobotContainer {
         stopShootBtn.onTrue(new InstantCommand(()-> shooter.stop()));
 
         Trigger AutoIntakeBtn = new Trigger(() -> operatorController.getXButton());
-        AutoIntakeBtn.toggleOnTrue(new IntakePickUp(intake));
+        AutoIntakeBtn.toggleOnTrue(new IntakeAutoPickup(intake));
     }
 }
