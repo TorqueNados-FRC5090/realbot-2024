@@ -47,7 +47,7 @@ public class RobotContainer {
         
         setDriverControls();
         setOperatorControls();
-        setIntakeOn();
+        setDefaultCommands();
     }
 
     /** Initialize the auton selector on the dashboard */
@@ -64,21 +64,22 @@ public class RobotContainer {
         return autonChooser.getSelected();
     }
 
+    private void setDefaultCommands() {
+        // Set the intake to always be intaking by default
+        intake.setDefaultCommand(new AlwaysIntake(intake));
+    }
+
     private void setDriverControls() {
         // Drives the robot with the joysticks
         drivetrain.setDefaultCommand(new SwerveDriveCommand(drivetrain, 
         () -> driverController.getLeftX(),
         () -> driverController.getLeftY(),
         () -> driverController.getRightX()));
-
-    
         
         Trigger limeDriveBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .05);
         limeDriveBtn.whileTrue(new LimeDrive(drivetrain, shooterLimelight, -2, false));
     }
-    private void setIntakeOn(){
-        intake.setDefaultCommand(new AlwaysIntake(intake));
-    }
+
     private void setOperatorControls() {
         // use the xbox controller shooter half speed left bumber
         // full speed right bumber 

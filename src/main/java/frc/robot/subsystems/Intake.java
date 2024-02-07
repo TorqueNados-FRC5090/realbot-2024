@@ -21,8 +21,6 @@ public class Intake extends SubsystemBase{
 	
 
     public Intake(int intakeID, int rotateID, int limPort){
-    
-       
         intakeMotor = new CANSparkMax(intakeID, MotorType.kBrushless);
         intakeMotor.restoreFactoryDefaults();
         intakeMotor.setInverted(true);
@@ -34,8 +32,6 @@ public class Intake extends SubsystemBase{
 
         limitSwitch = new LimitSwitch(limPort);
         limitSwitch.setInverted(true);
-
-        
     }
 
     public void intake(double speed){  
@@ -49,7 +45,6 @@ public class Intake extends SubsystemBase{
 
     public void eject(double speed){
         intakeMotor.set(speed);
-        
     }
 
     public void stopRotate(){
