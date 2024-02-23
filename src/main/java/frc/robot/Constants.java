@@ -94,6 +94,8 @@ public final class Constants {
     public static final class ShooterConstants {
         /** Converts shooter pivot motor revolutions to degrees */
         public static final double SHOOTER_PIVOT_RATIO = 1.3889;
+        public static final double SHOOTER_PIVOT_MIN = -22;
+        public static final double SHOOTER_PIVOT_MAX = 33;
     }
 
     public static final class ClimberConstants {

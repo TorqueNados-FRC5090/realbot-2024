@@ -68,7 +68,7 @@ public class SwerveModule extends SubsystemBase {
         // Construct and configure the driving motor
         driveMotor = new CANSparkFlex(driveMotorID, MotorType.kBrushless);
         driveMotor.restoreFactoryDefaults();
-        driveMotor.setSmartCurrentLimit(45);
+        driveMotor.setSmartCurrentLimit(40);
         driveMotor.getPIDController().setFF(0.0);
         driveMotor.getPIDController().setP(0.2);
         driveMotor.getPIDController().setI(0.0);
