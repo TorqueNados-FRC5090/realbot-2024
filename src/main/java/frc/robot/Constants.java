@@ -114,8 +114,8 @@ public final class Constants {
         // Whether each driving motor should be inverted
         public static final boolean INVERT_FL_DRIVE = false;
         public static final boolean INVERT_RL_DRIVE = false;
-        public static final boolean INVERT_FR_DRIVE = true;
-        public static final boolean INVERT_RR_DRIVE = true;
+        public static final boolean INVERT_FR_DRIVE = false;
+        public static final boolean INVERT_RR_DRIVE = false;
 
         // Whether each turning motor should be inverted
         public static final boolean INVERT_FL_TURN = true;
