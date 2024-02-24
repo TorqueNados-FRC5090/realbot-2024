@@ -71,19 +71,13 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static enum IntakePosition{
-            PICKUP(200), 
-            CLIMB(90),
+            PICKUP(-214), 
+            CLIMB(-90),
             SHOOT(0);
 
             private double angle;
-
-            IntakePosition(double angle) {
-                this.angle = angle;
-            }
-
-            public double getAngle() {
-                return angle;
-            }
+            IntakePosition(double angle) { this.angle = angle; }
+            public double getAngle() { return angle; }
         }
 
         /** Converts intake pivot motor revolutions to degrees */
@@ -94,8 +88,15 @@ public final class Constants {
     public static final class ShooterConstants {
         /** Converts shooter pivot motor revolutions to degrees */
         public static final double SHOOTER_PIVOT_RATIO = 1.3889;
-        public static final double SHOOTER_PIVOT_MIN = -22;
-        public static final double SHOOTER_PIVOT_MAX = 33;
+        public static enum ShooterPosition{
+            MINIMUM(-22), 
+            INTAKE_CLEAR(8),
+            MAXIMUM(33);
+
+            private double angle;
+            ShooterPosition(double angle) { this.angle = angle; } 
+            public double getAngle() { return angle; }
+        }
     }
 
     public static final class ClimberConstants {

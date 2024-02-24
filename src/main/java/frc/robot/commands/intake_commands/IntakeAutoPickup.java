@@ -22,7 +22,7 @@ public class IntakeAutoPickup extends Command{
 
     @Override // Try to pick up a piece
     public void execute(){
-        intake.intake(.25);
+        intake.intake(.75);
     }
 
     @Override // Command ends once a piece is picked up
