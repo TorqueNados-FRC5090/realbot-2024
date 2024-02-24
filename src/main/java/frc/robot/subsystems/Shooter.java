@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.ShooterConstants.SHOOTER_PIVOT_MAX;
-import static frc.robot.Constants.ShooterConstants.SHOOTER_PIVOT_MIN;
+import static frc.robot.Constants.ShooterConstants.ShooterPosition.*;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_PIVOT_RATIO;
 
 import com.revrobotics.CANSparkFlex;
@@ -45,7 +44,8 @@ public class Shooter extends SubsystemBase{
 
         pivotPID = new GenericPID(pivotLeader, ControlType.kPosition, .2);
         pivotPID.setRatio(SHOOTER_PIVOT_RATIO);
-        pivotPID.setInputRange(SHOOTER_PIVOT_MIN, SHOOTER_PIVOT_MAX);
+        pivotPID.setInputRange(MINIMUM.getAngle(), MAXIMUM.getAngle());
+        pivotPID.activate(INTAKE_CLEAR.getAngle());
     }
 
     /** @return Whether the shooter has reached its target speed */

@@ -28,6 +28,7 @@ public class Intake extends SubsystemBase{
         rotationMotor = new CANSparkFlex(rotateID, MotorType.kBrushless);
         rotationMotor.restoreFactoryDefaults();
         rotationMotor.setIdleMode(IdleMode.kBrake);
+        rotationMotor.setInverted(false);
         rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.06);
         rotationPID.setRatio(INTAKE_PIVOT_RATIO);
 
