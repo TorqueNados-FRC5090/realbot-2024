@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase{
         rotationMotor.restoreFactoryDefaults();
         rotationMotor.setIdleMode(IdleMode.kBrake);
         rotationMotor.setInverted(false);
-        rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.06);
+        rotationPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.075);
         rotationPID.setRatio(INTAKE_PIVOT_RATIO);
 
         limitSwitch = new LimitSwitch(limPort);
