@@ -75,8 +75,10 @@ public final class Constants {
             CLIMB(-90),
             SHOOT(0);
 
+
             private double angle;
             IntakePosition(double angle) { this.angle = angle; }
+            /** @return The angle in degrees associated with this position */
             public double getAngle() { return angle; }
         }
 
@@ -95,6 +97,7 @@ public final class Constants {
 
             private double angle;
             ShooterPosition(double angle) { this.angle = angle; } 
+            /** @return The angle in degrees associated with this position */
             public double getAngle() { return angle; }
         }
     }
@@ -102,8 +105,15 @@ public final class Constants {
     public static final class ClimberConstants {
         /** Converts climber motor revolutions to inches */
         public static final double CLIMBER_RATIO = 3.61;
-        public static final double MIN_HEIGHT = 0;
-        public static final double MAX_HEIGHT = 14.4;
+        public static enum ClimberPosition{
+            MINIMUM(0), 
+            MAXIMUM(14.4);
+
+            private double height;
+            ClimberPosition(double angle) { this.height = angle; } 
+            /** The height in inches associated with this position */
+            public double getHeight() { return height; }
+        }
     }
 
     /** Turning a module to absolute 0 minus its offset will point it forward */

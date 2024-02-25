@@ -3,22 +3,25 @@ package frc.robot;
 // Import constants
 import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
-import static frc.robot.Constants.IntakeConstants.IntakePosition;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
 
+import frc.robot.Constants.ClimberConstants.ClimberPosition;
+import frc.robot.Constants.IntakeConstants.IntakePosition;
+import frc.robot.Constants.ShooterConstants.ShooterPosition;
 // Command imports
 import frc.robot.commands.*;
 import frc.robot.commands.drive_commands.*;
 import frc.robot.commands.intake_commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 // Subsystem imports
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.drivetrain.*;
-
 // Other imports
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -102,9 +105,14 @@ public class RobotContainer {
         operatorController.rightBumper().onTrue(new InstantCommand(() -> shooter.setSpeed(5000)));
         // PRESS START -> Stop the shooter
         operatorController.start().onTrue(new InstantCommand(()-> shooter.stopShooter()));
-    }
 
-    private Command climb() {
-        
+        // HOLD LT -> Raise the climber, release to climb
+        operatorController.y().onTrue(
+            new SequentialCommandGroup(
+                new SetIntakePosition(intake, IntakePosition.CLIMB),
+                new ParallelCommandGroup(
+                    new SetShooterPosition(shooter, ShooterPosition.MINIMUM),
+                    new SetClimberPosition(climber, ClimberPosition.MAXIMUM))))
+            .onFalse(new SetClimberPosition(climber, ClimberPosition.MINIMUM));
     }
 }
