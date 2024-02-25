@@ -103,4 +103,8 @@ public class RobotContainer {
         // PRESS START -> Stop the shooter
         operatorController.start().onTrue(new InstantCommand(()-> shooter.stopShooter()));
     }
+
+    private Command climb() {
+        
+    }
 }
