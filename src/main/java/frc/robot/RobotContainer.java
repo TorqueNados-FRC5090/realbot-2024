@@ -85,35 +85,28 @@ public class RobotContainer {
         // PRESS BACK -> Switch the robot between field-centric and robot-centric mode
         driverController.back().onTrue(new InstantCommand(() -> drivetrain.toggleFieldCentric()));
         // HOLD LT -> Activate the automatic intake
-        driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake));
+        driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake)
+            .onlyIf(() -> shooter.getPosition() >= ShooterPosition.INTAKE_CLEAR.getAngle()-1));
     }
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // PRESS A -> Move the intake to the floor pickup position
-        operatorController.a().onTrue(new SetIntakePosition(intake, IntakePosition.PICKUP));
-        // PRESS B -> Move the intake to the climbing position (vertical)
-        operatorController.b().onTrue(new SetIntakePosition(intake, IntakePosition.CLIMB));
-        // PRESS Y -> Move the intake to the shooting position
-        operatorController.y().onTrue(new SetIntakePosition(intake, IntakePosition.SHOOT));
+        // HOLD LT -> Prep the shooter for a point blank shot
+        operatorController.leftTrigger().onTrue(
+            new SetShooterPosition(shooter, ShooterPosition.INTAKE_CLEAR)
+            .andThen(() ->shooter.setSpeed(4000)))
+        .onFalse(new InstantCommand(() -> shooter.setSpeed(0)));
 
         // HOLD RT -> Drive the intake outward for piece ejection
         operatorController.rightTrigger().whileTrue(new Eject(intake));
 
-        // PRESS LB -> Set the shooter to half speed
-        operatorController.leftBumper().onTrue(new InstantCommand(() -> shooter.setSpeed(2500)));
-        // PRESS RB -> Set the shooter to full speed
-        operatorController.rightBumper().onTrue(new InstantCommand(() -> shooter.setSpeed(5000)));
-        // PRESS START -> Stop the shooter
-        operatorController.start().onTrue(new InstantCommand(()-> shooter.stopShooter()));
-
-        // HOLD LT -> Raise the climber, release to climb
+        // HOLD Y -> Raise the climber, release to climb
         operatorController.y().onTrue(
             new SequentialCommandGroup(
                 new SetIntakePosition(intake, IntakePosition.CLIMB),
                 new ParallelCommandGroup(
                     new SetShooterPosition(shooter, ShooterPosition.MINIMUM),
                     new SetClimberPosition(climber, ClimberPosition.MAXIMUM))))
-            .onFalse(new SetClimberPosition(climber, ClimberPosition.MINIMUM));
+        .onFalse(new SetClimberPosition(climber, ClimberPosition.MINIMUM));
     }
 }
