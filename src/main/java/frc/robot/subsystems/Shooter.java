@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants.ShooterPosition;
 import frc.robot.wrappers.GenericPID;
 
 public class Shooter extends SubsystemBase{
@@ -69,9 +70,9 @@ public class Shooter extends SubsystemBase{
     }
     
     /** Activates the shooter PID
-     *  @param angle The desired angle of the shooter */
-    public void goToPosition(double angle) {
-        pivotPID.activate(angle); 
+     *  @param pos The desired position of the shooter */
+    public void goToPosition(ShooterPosition pos) {
+        pivotPID.activate(pos.getAngle()); 
     }
     /** Stops the shooter */
     public void stopPivot() {
