@@ -5,7 +5,6 @@ import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
-
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.Constants.ShooterConstants.ShooterPosition;
@@ -18,10 +17,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
 // Subsystem imports
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.drivetrain.*;
+import edu.wpi.first.wpilibj.DriverStation;
 // Other imports
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,28 +37,27 @@ public class RobotContainer {
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
     
-    private final AutonContainer auton = new AutonContainer();
-    private final SendableChooser<Command> autonChooser = new SendableChooser<Command>();    
+    private final AutonContainer auton = new AutonContainer(this);
+    private final SendableChooser<Command> autonChooser = auton.buildAutonChooser();    
 
     /** Constructs a RobotContainer */
     public RobotContainer() {
-        initChooser();
+        SmartDashboard.putData("Auton Selector", autonChooser);
         
         setDriverControls();
         setOperatorControls();
         setDefaultCommands();
     }
 
-    /** Initialize the auton selector on the dashboard */
-    private void initChooser() {
-        SmartDashboard.putData("Auton Selector", autonChooser);
-        autonChooser.setDefaultOption("Do Nothing", auton.doNothing());
-    }
-
     /** Use this to pass the autonomous command to the main {@link Robot} class.
      *  @return the command to run in autonomous */
     public Command getAutonomousCommand() {
-        return autonChooser.getSelected();
+        return auton.shootPreload().andThen(
+            auton.getPPAuto(autonChooser.getSelected().getName()));
+    }
+
+    public boolean onRedAlliance() { 
+        return DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red);
     }
 
     /** Configures a set of commands that will run by default without human operation */
@@ -93,9 +91,8 @@ public class RobotContainer {
     private void setOperatorControls() {
         // HOLD LT -> Prep the shooter for a point blank shot
         operatorController.leftTrigger().onTrue(
-            new SetShooterPosition(shooter, ShooterPosition.INTAKE_CLEAR)
-            .andThen(() ->shooter.setSpeed(4000)))
-        .onFalse(new InstantCommand(() -> shooter.setSpeed(0)));
+            new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 4000))
+        .onFalse(new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
         operatorController.rightTrigger().whileTrue(new Eject(intake));
@@ -105,7 +102,7 @@ public class RobotContainer {
             new SequentialCommandGroup(
                 new SetIntakePosition(intake, IntakePosition.CLIMB),
                 new ParallelCommandGroup(
-                    new SetShooterPosition(shooter, ShooterPosition.MINIMUM),
+                    new SetShooterState(shooter, ShooterPosition.MINIMUM, 0),
                     new SetClimberPosition(climber, ClimberPosition.MAXIMUM))))
         .onFalse(new SetClimberPosition(climber, ClimberPosition.MINIMUM));
     }

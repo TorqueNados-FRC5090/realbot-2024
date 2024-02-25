@@ -50,7 +50,9 @@ public class Shooter extends SubsystemBase{
     }
 
     /** @return Whether the shooter has reached its target speed */
-    public boolean atTargetSpeed() { return shooterPID.atSetpoint(10); }
+    public boolean atTargetSpeed() { return shooterPID.atSetpoint(25); }
+    /** @return Whether the shooter has reached its target speed or surpassed it */
+    public boolean atOrAboveTargetSpeed() { return shooterPID.getMeasurement() >= shooterPID.getSetpoint(); }
     /** @return Whether the shooter has reached its target position */
     public boolean atTargetPosition() { return pivotPID.atSetpoint(2); }
     /** @return The RPM of the shooter */
