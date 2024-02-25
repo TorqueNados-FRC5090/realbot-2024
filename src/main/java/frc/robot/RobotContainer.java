@@ -35,7 +35,8 @@ public class RobotContainer {
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
     public final Blinkin blinkin = new Blinkin();
-    public final Limelight shooterLimelight = new Limelight("limelight-pbshoot");
+    public final Limelight shooterLimelight = new Limelight("limelight-shooter");
+    public final Limelight intakeLimelight = new Limelight("limelight-intake");
     
     private final AutonContainer auton = new AutonContainer();
     private final SendableChooser<Command> autonChooser = new SendableChooser<Command>();    
