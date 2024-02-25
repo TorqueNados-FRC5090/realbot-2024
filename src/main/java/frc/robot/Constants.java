@@ -102,6 +102,8 @@ public final class Constants {
     public static final class ClimberConstants {
         /** Converts climber motor revolutions to inches */
         public static final double CLIMBER_RATIO = 3.61;
+        public static final double MIN_HEIGHT = 0;
+        public static final double MAX_HEIGHT = 14.4;
     }
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
