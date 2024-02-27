@@ -17,6 +17,7 @@ public class Shooter extends SubsystemBase{
     private CANSparkFlex shooterLeader;
     private CANSparkFlex shooterFollower;
     private GenericPID shooterPID;
+    private GenericPID shooterFollowerPID;
 
     private CANSparkMax pivotLeader;
     private CANSparkMax pivotFollower;
@@ -33,9 +34,11 @@ public class Shooter extends SubsystemBase{
         shooterLeader.restoreFactoryDefaults();
         shooterFollower = new CANSparkFlex(shooterLeftID, MotorType.kBrushless);
         shooterFollower.restoreFactoryDefaults();
-        shooterFollower.follow(shooterLeader, true);
+        shooterFollower.setInverted(true);
 
         shooterPID = new GenericPID(shooterLeader, ControlType.kVelocity, .00022, .0000005, 0);
+        shooterPID.setInputRange(0, 6000);
+        shooterFollowerPID = new GenericPID(shooterFollower, ControlType.kVelocity, .00022, .0000005, 0);
 
         pivotLeader = new CANSparkMax(pivotLeftID, MotorType.kBrushless);
         pivotLeader.restoreFactoryDefaults();
@@ -50,7 +53,7 @@ public class Shooter extends SubsystemBase{
     }
 
     /** @return Whether the shooter has reached its target speed */
-    public boolean atTargetSpeed() { return shooterPID.atSetpoint(25); }
+    public boolean atTargetSpeed() { return shooterPID.atSetpoint(200); }
     /** @return Whether the shooter has reached its target speed or surpassed it */
     public boolean atOrAboveTargetSpeed() { return shooterPID.getMeasurement() >= shooterPID.getSetpoint(); }
     /** @return Whether the shooter has reached its target position */
@@ -62,8 +65,11 @@ public class Shooter extends SubsystemBase{
 
     /** Activates the shooter PID
      *  @param RPM The speed of the shooter in RPM */
-    public void setSpeed(double RPM){
+    public void setSpeed(double RPM) {
         shooterPID.activate(RPM); 
+
+        double followerRPM = RPM == 0 ? 0 : RPM + 500;
+        shooterFollowerPID.activate(followerRPM);
     }
     /** Stops the shooter */
     public void stopShooter() {
@@ -85,6 +91,7 @@ public class Shooter extends SubsystemBase{
     @Override // Called every 20ms
     public void periodic() {
         SmartDashboard.putNumber("Shooter RPM", getRPM());
+        SmartDashboard.putNumber("Shooter Differential", shooterFollowerPID.getMeasurement() - shooterPID.getMeasurement());
         SmartDashboard.putBoolean("Shooter at Target Speed", atTargetSpeed());
 
         SmartDashboard.putNumber("Shooter Pivot Position", getPosition());
