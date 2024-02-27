@@ -65,7 +65,7 @@ public class RobotContainer {
         // Set the intake to always be intaking by default
         intake.setDefaultCommand(new IntakePiece(intake));
         // we are making the LED to be on the entire time 
-        blinkin.setDefaultCommand(new LEDControlCommand(intake, blinkin));
+        blinkin.setDefaultCommand(new LEDControlCommand(intake, blinkin, shooter));
     }
 
     /** Configures a set of control bindings for the robot's operator */
