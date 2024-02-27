@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase{
         shooterFollower.setInverted(true);
 
         shooterPID = new GenericPID(shooterLeader, ControlType.kVelocity, .00022, .0000005, 0);
-        shooterPID.setInputRange(0, 6000);
+        shooterPID.setInputRange(0, 5500);
         shooterFollowerPID = new GenericPID(shooterFollower, ControlType.kVelocity, .00022, .0000005, 0);
 
         pivotLeader = new CANSparkMax(pivotLeftID, MotorType.kBrushless);
@@ -68,7 +68,7 @@ public class Shooter extends SubsystemBase{
     public void setSpeed(double RPM) {
         shooterPID.activate(RPM); 
 
-        double followerRPM = RPM == 0 ? 0 : RPM + 500;
+        double followerRPM = RPM == 0 ? 0 : RPM + 1000;
         shooterFollowerPID.activate(followerRPM);
     }
     /** Stops the shooter */
