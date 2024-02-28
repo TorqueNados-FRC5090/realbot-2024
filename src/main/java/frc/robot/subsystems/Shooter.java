@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,9 +33,14 @@ public class Shooter extends SubsystemBase{
     public Shooter(int shooterRightID, int shooterLeftID, int pivotRightID, int pivotLeftID) {
         shooterLeader = new CANSparkFlex(shooterRightID, MotorType.kBrushless);
         shooterLeader.restoreFactoryDefaults();
+        shooterLeader.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+
         shooterFollower = new CANSparkFlex(shooterLeftID, MotorType.kBrushless);
         shooterFollower.restoreFactoryDefaults();
         shooterFollower.setInverted(true);
+        shooterFollower.follow(shooterLeader, true);
+        shooterFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+
 
         shooterPID = new GenericPID(shooterLeader, ControlType.kVelocity, .00022, .0000005, 0);
         shooterPID.setInputRange(0, 6000);
@@ -42,9 +48,13 @@ public class Shooter extends SubsystemBase{
 
         pivotLeader = new CANSparkMax(pivotLeftID, MotorType.kBrushless);
         pivotLeader.restoreFactoryDefaults();
+
         pivotFollower = new CANSparkMax(pivotRightID, MotorType.kBrushless);
         pivotFollower.restoreFactoryDefaults();
         pivotFollower.follow(pivotLeader, true);
+        pivotFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);
+        pivotFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500);
+        pivotFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
 
         pivotPID = new GenericPID(pivotLeader, ControlType.kPosition, .2);
         pivotPID.setRatio(SHOOTER_PIVOT_RATIO);
