@@ -24,6 +24,7 @@ public final class Constants {
     /** PWM ports used by blinkin LED controllers */
     public static final class BlinkinPorts {
         public static final int SHOOTER_LEDS_PORT = 0;
+        public static final int INTAKE_LEDS_PORT = 2;
     }
 
     /** IDs used by the swerve drivetrain.
@@ -70,7 +71,7 @@ public final class Constants {
     /* -------------- SUBSYTEM CONSTANTS -------------- */
 
     public static final class IntakeConstants {
-        public static enum IntakePosition{
+        public static enum IntakePosition {
             PICKUP(-214), 
             CLIMB(-90),
             SHOOT(0);
@@ -90,10 +91,10 @@ public final class Constants {
     public static final class ShooterConstants {
         /** Converts shooter pivot motor revolutions to degrees */
         public static final double SHOOTER_PIVOT_RATIO = 1.3889;
-        public static enum ShooterPosition{
-            MINIMUM(-22), 
-            INTAKE_CLEAR(8),
-            MAXIMUM(33);
+        public static enum ShooterPosition {
+            MINIMUM(-26), 
+            INTAKE_CLEAR(4),
+            MAXIMUM(29);
 
             private double angle;
             ShooterPosition(double angle) { this.angle = angle; } 
@@ -104,8 +105,8 @@ public final class Constants {
 
     public static final class ClimberConstants {
         /** Converts climber motor revolutions to inches */
-        public static final double CLIMBER_RATIO = 3.61;
-        public static enum ClimberPosition{
+        public static final double CLIMBER_RATIO = 6.498;
+        public static enum ClimberPosition {
             MINIMUM(0), 
             MAXIMUM(14.4);
 

@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,6 +18,7 @@ public class Shooter extends SubsystemBase{
     private CANSparkFlex shooterLeader;
     private CANSparkFlex shooterFollower;
     private GenericPID shooterPID;
+    private GenericPID shooterFollowerPID;
 
     private CANSparkMax pivotLeader;
     private CANSparkMax pivotFollower;
@@ -31,17 +33,28 @@ public class Shooter extends SubsystemBase{
     public Shooter(int shooterRightID, int shooterLeftID, int pivotRightID, int pivotLeftID) {
         shooterLeader = new CANSparkFlex(shooterRightID, MotorType.kBrushless);
         shooterLeader.restoreFactoryDefaults();
+        shooterLeader.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+
         shooterFollower = new CANSparkFlex(shooterLeftID, MotorType.kBrushless);
         shooterFollower.restoreFactoryDefaults();
+        shooterFollower.setInverted(true);
         shooterFollower.follow(shooterLeader, true);
+        shooterFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+
 
         shooterPID = new GenericPID(shooterLeader, ControlType.kVelocity, .00022, .0000005, 0);
+        shooterPID.setInputRange(0, 6000);
+        shooterFollowerPID = new GenericPID(shooterFollower, ControlType.kVelocity, .00022, .0000005, 0);
 
         pivotLeader = new CANSparkMax(pivotLeftID, MotorType.kBrushless);
         pivotLeader.restoreFactoryDefaults();
+
         pivotFollower = new CANSparkMax(pivotRightID, MotorType.kBrushless);
         pivotFollower.restoreFactoryDefaults();
         pivotFollower.follow(pivotLeader, true);
+        pivotFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);
+        pivotFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500);
+        pivotFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
 
         pivotPID = new GenericPID(pivotLeader, ControlType.kPosition, .2);
         pivotPID.setRatio(SHOOTER_PIVOT_RATIO);
@@ -50,9 +63,9 @@ public class Shooter extends SubsystemBase{
     }
 
     /** @return Whether the shooter has reached its target speed */
-    public boolean atTargetSpeed() { return shooterPID.atSetpoint(25); }
+    public boolean atTargetSpeed() { return shooterPID.atSetpoint(200); }
     /** @return Whether the shooter has reached its target speed or surpassed it */
-    public boolean atOrAboveTargetSpeed() { return shooterPID.getMeasurement() >= shooterPID.getSetpoint(); }
+    public boolean atOrAboveTargetSpeed() { return shooterPID.getMeasurement() >= shooterPID.getSetpoint() || atTargetSpeed(); }
     /** @return Whether the shooter has reached its target position */
     public boolean atTargetPosition() { return pivotPID.atSetpoint(2); }
     /** @return The RPM of the shooter */
@@ -60,10 +73,15 @@ public class Shooter extends SubsystemBase{
     /** @return The position of the shooter's pivot */
     public double getPosition() { return pivotPID.getMeasurement(); }
 
+    public boolean readyToShoot() { return atOrAboveTargetSpeed() && atTargetPosition() && shooterPID.getSetpoint() > 0;}
+
     /** Activates the shooter PID
      *  @param RPM The speed of the shooter in RPM */
-    public void setSpeed(double RPM){
+    public void setSpeed(double RPM) {
         shooterPID.activate(RPM); 
+
+        double followerRPM = RPM == 0 ? 0 : RPM + 500;
+        shooterFollowerPID.activate(followerRPM);
     }
     /** Stops the shooter */
     public void stopShooter() {
@@ -85,6 +103,7 @@ public class Shooter extends SubsystemBase{
     @Override // Called every 20ms
     public void periodic() {
         SmartDashboard.putNumber("Shooter RPM", getRPM());
+        SmartDashboard.putNumber("Shooter Differential", shooterFollowerPID.getMeasurement() - shooterPID.getMeasurement());
         SmartDashboard.putBoolean("Shooter at Target Speed", atTargetSpeed());
 
         SmartDashboard.putNumber("Shooter Pivot Position", getPosition());

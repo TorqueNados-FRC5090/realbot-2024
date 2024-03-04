@@ -5,6 +5,7 @@ import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
+import static frc.robot.Constants.BlinkinPorts.*;
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.Constants.ShooterConstants.ShooterPosition;
@@ -33,7 +34,7 @@ public class RobotContainer {
     public final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
-    public final Blinkin blinkin = new Blinkin();
+    public final Blinkin blinkin = new Blinkin(SHOOTER_LEDS_PORT);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
     
@@ -65,7 +66,7 @@ public class RobotContainer {
         // Set the intake to always be intaking by default
         intake.setDefaultCommand(new IntakePiece(intake));
         // we are making the LED to be on the entire time 
-        blinkin.setDefaultCommand(new LEDControlCommand(intake, blinkin));
+        blinkin.setDefaultCommand(new LEDControlCommand(intake, blinkin, shooter));
     }
 
     /** Configures a set of control bindings for the robot's operator */
@@ -76,23 +77,31 @@ public class RobotContainer {
         () -> driverController.getLeftY(),
         () -> driverController.getRightX()));
 
-        // HOLD X -> Lock the drivetrain for anti-defense
-        driverController.x().whileTrue(new LockDrivetrain(drivetrain));
         // PRESS START -> Reset the heading of the robot so the currently faced direction becomes 0
-        driverController.start().onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
-        // PRESS BACK -> Switch the robot between field-centric and robot-centric mode
-        driverController.back().onTrue(new InstantCommand(() -> drivetrain.toggleFieldCentric()));
+        driverController.leftBumper().onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
+        
         // HOLD LT -> Activate the automatic intake
         driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake)
-            .onlyIf(() -> shooter.getPosition() >= ShooterPosition.INTAKE_CLEAR.getAngle()-1));
+        .onlyIf(() -> shooter.getPosition() >= ShooterPosition.INTAKE_CLEAR.getAngle()-1));
+        
+        // HOLD RT -> Drive in robot centric mode
+        driverController.rightTrigger().onTrue(new InstantCommand(() -> drivetrain.setFieldCentric(false)))
+        .onFalse(new InstantCommand(() -> drivetrain.setFieldCentric(true)));
+        // HOLD X -> Lock the drivetrain for anti-defense
+        driverController.x().whileTrue(new LockDrivetrain(drivetrain));
+        // HOLD A -> Lock robot heading straight
+        driverController.a().whileTrue(new DriveWithHeading(drivetrain,
+            () -> driverController.getLeftX(), () -> driverController.getLeftY(), 0));
+
+        
     }
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // HOLD LT -> Prep the shooter for a point blank shot
-        operatorController.leftTrigger().onTrue(
-            new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 4000))
-        .onFalse(new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 0));
+        // PRESS RB -> Prep the shooter for a point blank shot
+        operatorController.rightBumper().onTrue( new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 4000));
+        // PRESS START -> Stop the shooter
+        operatorController.start().onTrue(new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
         operatorController.rightTrigger().whileTrue(new Eject(intake));

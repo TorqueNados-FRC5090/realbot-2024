@@ -7,8 +7,12 @@ public class Blinkin extends SubsystemBase  {
 
     public Spark LED;
 
-    public Blinkin(){
-        LED = new Spark(0);
+    /** Creates a Blinkin
+     *  @param port 
+     *  PWM port used by the blinkin 
+     */
+    public Blinkin(int port){
+        LED = new Spark(port);
     }
     /** Sets LED to blue, light bouncing back and fourth */
     public void blueBounce(){
@@ -33,6 +37,14 @@ public class Blinkin extends SubsystemBase  {
     /** Sets LED to red, solid color */
     public void redSolid(){
         LED.set(0.61);
+    }
+    /** Sets LED to orange, solid color */
+    public void orangeSolid(){
+        LED.set(0.63);
+    }
+    /** Sets LED to white, solid color */
+    public void whiteSolid(){
+        LED.set(0.93);
     }
 
 }
