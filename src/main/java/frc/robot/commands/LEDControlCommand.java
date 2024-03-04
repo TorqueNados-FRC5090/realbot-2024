@@ -9,7 +9,7 @@ public class LEDControlCommand extends Command {
     private Intake intake;
     private Blinkin blinkin;
     private Shooter shooter;
-    public LEDControlCommand(Intake intake, Blinkin blinkin, Shooter shooter) {
+    public LEDControlCommand(Blinkin blinkin, Intake intake, Shooter shooter) {
        this.intake = intake;
        this.blinkin = blinkin;
        this.shooter = shooter;

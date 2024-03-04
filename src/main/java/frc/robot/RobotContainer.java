@@ -34,7 +34,8 @@ public class RobotContainer {
     public final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
-    public final Blinkin blinkin = new Blinkin(SHOOTER_LEDS_PORT);
+    public final Blinkin shooterLEDs = new Blinkin(SHOOTER_LEDS_PORT);
+    public final Blinkin intakeLEDs = new Blinkin(INTAKE_LEDS_PORT);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
     
@@ -65,8 +66,9 @@ public class RobotContainer {
     private void setDefaultCommands() {
         // Set the intake to always be intaking by default
         intake.setDefaultCommand(new IntakePiece(intake));
-        // we are making the LED to be on the entire time 
-        blinkin.setDefaultCommand(new LEDControlCommand(intake, blinkin, shooter));
+        // Set the LEDs to intdicate the robot's state
+        shooterLEDs.setDefaultCommand(new LEDControlCommand(shooterLEDs, intake, shooter));
+        intakeLEDs.setDefaultCommand(new LEDControlCommand(intakeLEDs, intake, shooter));
     }
 
     /** Configures a set of control bindings for the robot's operator */
@@ -81,8 +83,8 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
         
         // HOLD LT -> Activate the automatic intake
-        driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake)
-        .onlyIf(() -> shooter.getPosition() >= ShooterPosition.INTAKE_CLEAR.getAngle()-1));
+        driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake).alongWith(intakeLEDs.run(() -> intakeLEDs.whiteSolid()))
+            .onlyIf(() -> shooter.getPosition() >= ShooterPosition.INTAKE_CLEAR.getAngle()-1));
         
         // HOLD RT -> Drive in robot centric mode
         driverController.rightTrigger().onTrue(new InstantCommand(() -> drivetrain.setFieldCentric(false)))

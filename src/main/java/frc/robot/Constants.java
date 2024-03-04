@@ -24,7 +24,7 @@ public final class Constants {
     /** PWM ports used by blinkin LED controllers */
     public static final class BlinkinPorts {
         public static final int SHOOTER_LEDS_PORT = 0;
-        public static final int INTAKE_LEDS_PORT = 2;
+        public static final int INTAKE_LEDS_PORT = 1;
     }
 
     /** IDs used by the swerve drivetrain.
