@@ -24,6 +24,7 @@ public final class Constants {
     /** PWM ports used by blinkin LED controllers */
     public static final class BlinkinPorts {
         public static final int SHOOTER_LEDS_PORT = 0;
+        public static final int INTAKE_LEDS_PORT = 2;
     }
 
     /** IDs used by the swerve drivetrain.
@@ -104,7 +105,7 @@ public final class Constants {
 
     public static final class ClimberConstants {
         /** Converts climber motor revolutions to inches */
-        public static final double CLIMBER_RATIO = 3.61;
+        public static final double CLIMBER_RATIO = 6.498;
         public static enum ClimberPosition {
             MINIMUM(0), 
             MAXIMUM(14.4);

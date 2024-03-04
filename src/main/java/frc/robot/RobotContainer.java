@@ -5,6 +5,7 @@ import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
+import static frc.robot.Constants.BlinkinPorts.*;
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.Constants.ShooterConstants.ShooterPosition;
@@ -33,7 +34,7 @@ public class RobotContainer {
     public final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
-    public final Blinkin blinkin = new Blinkin();
+    public final Blinkin blinkin = new Blinkin(SHOOTER_LEDS_PORT);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
     

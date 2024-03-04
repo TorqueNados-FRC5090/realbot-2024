@@ -25,13 +25,11 @@ public class LEDControlCommand extends Command {
     @Override
     public void execute() {
      // This command should change colors for if there is an object
-        if (intake.holdingPiece() && shooter.readyToShoot()) {
-            blinkin.blueBounce();}
+        if (intake.holdingPiece() && shooter.readyToShoot() ) {
+            blinkin.greenSolid();}
         else if (intake.holdingPiece()) {
-            blinkin.blueSolid(); }
-        else blinkin.goldSolid();
-
-        
+            blinkin.orangeSolid(); }
+        else blinkin.blueSolid();
     }
     @Override
     public boolean isFinished(){
