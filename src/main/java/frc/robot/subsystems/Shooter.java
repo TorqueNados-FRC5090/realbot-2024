@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase{
         pivotPID = new GenericPID(pivotLeader, ControlType.kPosition, .2);
         pivotPID.setRatio(SHOOTER_PIVOT_RATIO);
         pivotPID.setInputRange(MINIMUM.getAngle(), MAXIMUM.getAngle());
-        pivotPID.activate(INTAKE_CLEAR.getAngle());
+        pivotPID.activate(POINT_BLANK.getAngle());
     }
 
     /** @return Whether the shooter has reached its target speed */

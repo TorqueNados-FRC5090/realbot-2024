@@ -68,6 +68,10 @@ public final class Constants {
         public static final int CLIMBER_RIGHT_ID = 17;
     }
 
+    public static final class AmpDeflectorIDs {
+        public static final int AMP_DEFLECTOR_ID = 18;
+    }
+
     /* -------------- SUBSYTEM CONSTANTS -------------- */
 
     public static final class IntakeConstants {
@@ -92,9 +96,10 @@ public final class Constants {
         /** Converts shooter pivot motor revolutions to degrees */
         public static final double SHOOTER_PIVOT_RATIO = 1.3889;
         public static enum ShooterPosition {
-            MINIMUM(-26), 
-            INTAKE_CLEAR(4),
-            MAXIMUM(29);
+            MINIMUM(-24), 
+            AMP_SHOT(10.7),
+            POINT_BLANK(6),
+            MAXIMUM(31);
 
             private double angle;
             ShooterPosition(double angle) { this.angle = angle; } 
