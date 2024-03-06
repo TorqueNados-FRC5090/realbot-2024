@@ -97,8 +97,9 @@ public final class Constants {
         public static final double SHOOTER_PIVOT_RATIO = 1.3889;
         public static enum ShooterPosition {
             MINIMUM(-24), 
-            AMP_SHOT(10.7),
             POINT_BLANK(6),
+            AMP_SHOT(10.7),
+            LONG_SHOT(19),
             MAXIMUM(31);
 
             private double angle;

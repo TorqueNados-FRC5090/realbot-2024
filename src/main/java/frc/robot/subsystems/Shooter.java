@@ -37,7 +37,6 @@ public class Shooter extends SubsystemBase{
 
         shooterFollower = new CANSparkFlex(shooterLeftID, MotorType.kBrushless);
         shooterFollower.restoreFactoryDefaults();
-        shooterFollower.setInverted(true);
         shooterFollower.follow(shooterLeader, true);
         shooterFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
 
@@ -78,10 +77,12 @@ public class Shooter extends SubsystemBase{
     /** Activates the shooter PID
      *  @param RPM The speed of the shooter in RPM */
     public void setSpeed(double RPM) {
-        shooterPID.activate(RPM); 
-
-        double followerRPM = RPM == 0 ? 0 : RPM + 500;
-        shooterFollowerPID.activate(followerRPM);
+        if (RPM == 0) {
+            shooterPID.pause();
+            shooterLeader.stopMotor();
+        }
+        else
+            shooterPID.activate(RPM);
     }
     /** Stops the shooter */
     public void stopShooter() {

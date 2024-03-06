@@ -100,17 +100,20 @@ public class RobotContainer {
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // Hold RB -> Prep the shooter for a point blank shot
-        operatorController.rightBumper()
+        // Hold LT -> Prep the shooter for a point blank shot
+        operatorController.leftTrigger()
             .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
-
-        // PRESS LB -> Prep shooter for amp shot
+        // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
             .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1500))
             .whileTrue(deflector.deflectorOut())
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
-        
+        // Hold RB -> Long Shot
+        operatorController.rightBumper()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.LONG_SHOT, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+
         // HOLD RT -> Drive the intake outward for piece ejection
         operatorController.rightTrigger().whileTrue(new Eject(intake));
 
