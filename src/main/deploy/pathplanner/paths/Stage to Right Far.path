@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3803113320512361,
-        "y": 5.55593454044051
+        "x": 0.7,
+        "y": 4.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.751986646830437,
-        "y": 7.153815450488045
+        "x": 4.0277223411589675,
+        "y": 1.6947276751696363
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.258753946079321,
-        "y": 7.461664066185276
+        "x": 7.85101693718827,
+        "y": 0.7604811409147759
       },
       "prevControl": {
-        "x": 6.494210160977719,
-        "y": 7.461664066185276
+        "x": 7.666098189339236,
+        "y": 0.916034689212235
       },
       "nextControl": {
-        "x": 8.63674298777169,
-        "y": 7.461664066185276
+        "x": 8.362410408928572,
+        "y": 0.33029723565545954
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.566602561776552,
-        "y": 5.790485866686019
+        "x": 0.7,
+        "y": 4.4
       },
       "prevControl": {
-        "x": 5.450850901701804,
-        "y": 5.735875757465801
+        "x": 2.2890888638920135,
+        "y": 2.5606879785188146
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,12 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2,
-      "rotationDegrees": 0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 1.15,
       "rotationDegrees": 0,
       "rotateFast": false
     }
@@ -59,20 +54,20 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 5.25,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -1.4320961841647246,
+    "rotation": -60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Stage-Side Paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Piece"
+                  "pathName": "Center to Center Near"
                 }
               },
               {
@@ -33,43 +33,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Amp-Side Piece"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Stage-Side Piece"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
+            "waitTime": 0.2
           }
         },
         {
@@ -81,6 +45,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Center Start",
   "choreoAuto": false
 }

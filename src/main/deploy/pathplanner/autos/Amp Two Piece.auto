@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6847127979970246,
-      "y": 6.729380601618346
+      "x": 0.7,
+      "y": 6.7
     },
-    "rotation": 58.96070650819538
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Amp-Start Piece"
+            "pathName": "Amp to Near"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.2
           }
         },
         {
@@ -32,6 +32,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Amp Start",
   "choreoAuto": false
 }

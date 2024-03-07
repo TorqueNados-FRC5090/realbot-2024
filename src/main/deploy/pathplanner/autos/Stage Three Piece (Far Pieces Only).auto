@@ -3,31 +3,18 @@
   "startingPose": {
     "position": {
       "x": 0.7,
-      "y": 6.7
+      "y": 4.4
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp to Near"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "RevShooter"
-                }
-              }
-            ]
+            "pathName": "Stage to Right Far"
           }
         },
         {
@@ -45,12 +32,24 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Amp to All Far"
+            "pathName": "Stage to Left Far"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         }
       ]
     }
   },
-  "folder": "Amp Start",
+  "folder": "Stage Start",
   "choreoAuto": false
 }

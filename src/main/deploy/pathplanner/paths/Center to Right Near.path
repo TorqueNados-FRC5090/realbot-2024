@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3492869842882542,
-        "y": 5.554628252113648
+        "x": 1.35,
+        "y": 5.55
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.752059218404151,
-        "y": 6.178925214993287
+        "x": 1.6178018070321856,
+        "y": 4.306034326354367
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.2152472876374323,
-        "y": 6.474291520011612
+        "x": 2.4,
+        "y": 4.1338974839469875
       },
       "prevControl": {
-        "x": 2.161544323088646,
-        "y": 6.615261801952176
+        "x": 1.4950081740185388,
+        "y": 4.1338974839469875
       },
       "nextControl": {
-        "x": 2.2841782329924376,
-        "y": 6.293347788454721
+        "x": 2.5756493603077297,
+        "y": 4.1338974839469875
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 1.3492869842882542,
-        "y": 5.554628252113648
+        "y": 5.55
       },
       "prevControl": {
-        "x": 1.9534453354620995,
-        "y": 6.004390580209733
+        "x": 1.8057621829529373,
+        "y": 5.133802024746907
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,36 +46,44 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.1,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 39.18188500042346,
-      "rotateFast": true
-    },
-    {
-      "waypointRelativePos": 1.9,
+      "waypointRelativePos": 1,
       "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Intake Piece",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 5.25,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Center-Start Paths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

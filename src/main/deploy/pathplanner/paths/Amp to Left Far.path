@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3492869842882542,
-        "y": 5.561341122682245
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4106867853375344,
-        "y": 4.280297569604149
+        "x": 2.4971878515185604,
+        "y": 7.038172647773868
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.168752445612999,
-        "y": 4.095403506122328
+        "x": 7.88091004753438,
+        "y": 7.3469646939293884
       },
       "prevControl": {
-        "x": 1.2637606196315379,
-        "y": 4.095403506122328
+        "x": 7.971498318745251,
+        "y": 7.543239281552942
       },
       "nextControl": {
-        "x": 2.3444018059207288,
-        "y": 4.095403506122328
+        "x": 7.8003556007112005,
+        "y": 7.172430059145833
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.3492869842882542,
-        "y": 5.561341122682245
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": {
-        "x": 1.8057621829529373,
-        "y": 5.1451431474291525
+        "x": 3.4839798251025074,
+        "y": 7.038172647773868
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 2.510105476462669,
       "rotateFast": false
     }
   ],
@@ -55,30 +55,37 @@
   "eventMarkers": [
     {
       "name": "Intake Piece",
-      "waypointRelativePos": 0.0,
+      "waypointRelativePos": 0.45,
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoIntake"
+              }
+            }
+          ]
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 5.25,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Amp-Side Paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
