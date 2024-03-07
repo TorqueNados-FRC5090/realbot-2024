@@ -71,7 +71,7 @@ public class AutonContainer {
     /** Shoots the piece that comes preloaded in our robot */
     public Command shootPreload() {
         return new SequentialCommandGroup(
-            new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 4000).withTimeout(.75),
+            new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000).withTimeout(.75),
             new Eject(intake).withTimeout(.15));
     }
 

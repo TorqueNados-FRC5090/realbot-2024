@@ -5,6 +5,7 @@ import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
+import static frc.robot.Constants.AmpDeflectorIDs.*;
 import static frc.robot.Constants.BlinkinPorts.*;
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
@@ -36,6 +37,7 @@ public class RobotContainer {
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
     public final Blinkin shooterLEDs = new Blinkin(SHOOTER_LEDS_PORT);
     public final Blinkin intakeLEDs = new Blinkin(INTAKE_LEDS_PORT);
+    public final AmpDeflector deflector = new AmpDeflector(AMP_DEFLECTOR);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
     
@@ -100,10 +102,19 @@ public class RobotContainer {
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // PRESS RB -> Prep the shooter for a point blank shot
-        operatorController.rightBumper().onTrue( new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 4000));
-        // PRESS START -> Stop the shooter
-        operatorController.start().onTrue(new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 0));
+        // Hold LT -> Prep the shooter for a point blank shot
+        operatorController.leftTrigger()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+        // Hold LB -> Prep shooter for amp shot
+        operatorController.leftBumper()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1500))
+            .whileTrue(deflector.deflectorOut())
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+        // Hold RB -> Long Shot
+        operatorController.rightBumper()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.LONG_SHOT, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
         operatorController.rightTrigger().whileTrue(new Eject(intake));
