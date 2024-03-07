@@ -5,6 +5,7 @@ import static frc.robot.Constants.ControllerPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
+import static frc.robot.Constants.AmpDeflectorIDs.*;
 import static frc.robot.Constants.BlinkinPorts.*;
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
@@ -34,6 +35,7 @@ public class RobotContainer {
     public final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
+    public final AmpDeflector deflector = new AmpDeflector(AMP_DEFLECTOR_ID);
     public final Blinkin blinkin = new Blinkin(SHOOTER_LEDS_PORT);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
@@ -82,7 +84,7 @@ public class RobotContainer {
         
         // HOLD LT -> Activate the automatic intake
         driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake)
-        .onlyIf(() -> shooter.getPosition() >= ShooterPosition.INTAKE_CLEAR.getAngle()-1));
+        .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
         
         // HOLD RT -> Drive in robot centric mode
         driverController.rightTrigger().onTrue(new InstantCommand(() -> drivetrain.setFieldCentric(false)))
@@ -98,10 +100,19 @@ public class RobotContainer {
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // PRESS RB -> Prep the shooter for a point blank shot
-        operatorController.rightBumper().onTrue( new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 4000));
-        // PRESS START -> Stop the shooter
-        operatorController.start().onTrue(new SetShooterState(shooter, ShooterPosition.INTAKE_CLEAR, 0));
+        // Hold LT -> Prep the shooter for a point blank shot
+        operatorController.leftTrigger()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+        // Hold LB -> Prep shooter for amp shot
+        operatorController.leftBumper()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1500))
+            .whileTrue(deflector.deflectorOut())
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+        // Hold RB -> Long Shot
+        operatorController.rightBumper()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.LONG_SHOT, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
         operatorController.rightTrigger().whileTrue(new Eject(intake));
