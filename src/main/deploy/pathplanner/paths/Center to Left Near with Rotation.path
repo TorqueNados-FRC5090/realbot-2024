@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7527722341158969,
-        "y": 6.178925214993287
+        "x": 2.2397307353856415,
+        "y": 6.1083390413226315
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.2152472876374323,
-        "y": 6.474291520011612
+        "x": 2.609343607312807,
+        "y": 6.623851731115785
       },
       "prevControl": {
-        "x": 2.161544323088646,
-        "y": 6.615261801952176
+        "x": 2.6743638032231813,
+        "y": 6.90831508822367
       },
       "nextControl": {
-        "x": 2.2841782329924376,
-        "y": 6.293347788454721
+        "x": 2.531530371117614,
+        "y": 6.283418822761817
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 5.554628252113648
       },
       "prevControl": {
-        "x": 1.9534453354620995,
-        "y": 6.004390580209733
+        "x": 2.0549242994220585,
+        "y": 5.952712568932246
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,7 +52,7 @@
     },
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": 39.18188500042346,
+      "rotationDegrees": 47.4895529219992,
       "rotateFast": true
     },
     {
@@ -62,10 +62,28 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Pickup",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 5.25,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -75,7 +93,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Center-Start Paths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

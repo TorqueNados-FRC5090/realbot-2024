@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Right Near"
+            "pathName": "Center to Right Near with Rotation"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Left Near"
+            "pathName": "Center to Left Near with Rotation"
           }
         },
         {
@@ -74,6 +74,6 @@
       ]
     }
   },
-  "folder": "Center Start",
+  "folder": "Center Autos",
   "choreoAuto": false
 }

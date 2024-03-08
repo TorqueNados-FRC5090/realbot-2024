@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6931189159058022,
-        "y": 5.30579737859239
+        "x": 2.1716441537148476,
+        "y": 5.427473224614695
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.2018215465002355,
-        "y": 4.769222395587648
+        "x": 2.4148105168248253,
+        "y": 4.600707590040772
       },
       "prevControl": {
-        "x": 2.1429787604263772,
-        "y": 4.725518629525261
+        "x": 2.4119934731496397,
+        "y": 4.5274644544859495
       },
       "nextControl": {
-        "x": 2.3463841213396703,
-        "y": 4.876592038898363
+        "x": 2.424537171349224,
+        "y": 4.853600607675149
       },
       "isLocked": false,
       "linkedName": null
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -42.709389957361445,
+      "rotationDegrees": -49.84400037508075,
       "rotateFast": true
     },
     {
@@ -62,10 +62,28 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Pickup",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 5.25,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -75,7 +93,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Center-Start Paths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

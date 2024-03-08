@@ -56,8 +56,7 @@ public class RobotContainer {
     /** Use this to pass the autonomous command to the main {@link Robot} class.
      *  @return the command to run in autonomous */
     public Command getAutonomousCommand() {
-        return auton.shootPreload().andThen(
-            auton.getPPAuto(autonChooser.getSelected().getName()));
+        return auton.shootPreload().andThen(autonChooser.getSelected());
     }
 
     public boolean onRedAlliance() { 
@@ -96,8 +95,6 @@ public class RobotContainer {
         // HOLD A -> Lock robot heading straight
         driverController.a().whileTrue(new DriveWithHeading(drivetrain,
             () -> driverController.getLeftX(), () -> driverController.getLeftY(), 0));
-
-        
     }
 
     /** Configures a set of control bindings for the robot's operator */

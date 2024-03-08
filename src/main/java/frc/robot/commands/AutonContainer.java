@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.SwerveConstants.ModuleConstants.WHEEL_DIAMETER;
 import static frc.robot.Constants.SwerveConstants.MAX_TRANSLATION_SPEED;
+import static frc.robot.Constants.SwerveConstants.ModuleConstants.WHEEL_DIAMETER;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -12,7 +12,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants.ShooterPosition;
@@ -54,13 +53,25 @@ public class AutonContainer {
     }
 
     private void registerNamedCommands() {
-        NamedCommands.registerCommand("RevShooter", new InstantCommand(() -> shooter.setSpeed(4000)));
         NamedCommands.registerCommand("Shoot", new Eject(intake).withTimeout(.15));
         NamedCommands.registerCommand("AutoIntake", new IntakeAutoPickup(intake).withTimeout(3));
     }
 
     public SendableChooser<Command> buildAutonChooser() {
-        return AutoBuilder.buildAutoChooser();
+        SendableChooser<Command> chooser = new SendableChooser<Command>();
+        chooser.setDefaultOption("Shoot Preload", doNothing());
+        chooser.addOption("Amp Two Piece", getPPAuto("Amp Two Piece"));
+        chooser.addOption("Amp Four Piece", getPPAuto("Amp Four Piece"));
+        chooser.addOption("Center Two Piece", getPPAuto("Center Two Piece"));
+        chooser.addOption("Center Three Piece", getPPAuto("Center Three Piece"));
+        chooser.addOption("Center Three Piece (Under Stage)", getPPAuto("Center Three Piece (Under Stage)"));
+        chooser.addOption("Center Four Piece (Near Pieces Only)", getPPAuto("Center Four Piece (Near Pieces Only)"));
+        chooser.addOption("Center Four Piece and Claim", getPPAuto("Center Four Piece and Claim"));
+        chooser.addOption("Center Five Piece!!", getPPAuto("Center Five Piece!!"));
+        chooser.addOption("Stage Two Piece", getPPAuto("Stage Two Piece"));
+        chooser.addOption("Stage Three Piece (Far Pieces Only)", getPPAuto("Stage Three Piece (Far Pieces Only)"));
+        chooser.addOption("Stage Four Piece", getPPAuto("Stage Four Piece"));
+        return chooser;
     }
 
     /** Auton that does nothing */

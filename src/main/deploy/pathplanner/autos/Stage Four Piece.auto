@@ -65,10 +65,22 @@
           "data": {
             "pathName": "Stage to Left Far"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
         }
       ]
     }
   },
-  "folder": "Stage Start",
+  "folder": "Stage Autos",
   "choreoAuto": false
 }
