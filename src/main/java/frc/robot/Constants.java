@@ -98,7 +98,7 @@ public final class Constants {
         public static enum ShooterPosition {
             MINIMUM(-24), 
             POINT_BLANK(6),
-            AMP_SHOT(10.7),
+            AMP_SHOT(11),
             LONG_SHOT(19),
             MAXIMUM(31);
 

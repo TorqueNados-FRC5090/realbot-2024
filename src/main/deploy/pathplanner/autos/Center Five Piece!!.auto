@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Left Near with Rotation"
+            "pathName": "Center to Right Near with Rotation"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Right Near with Rotation"
+            "pathName": "Center to Left Near with Rotation"
           }
         },
         {

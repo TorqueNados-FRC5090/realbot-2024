@@ -85,6 +85,7 @@ public class RobotContainer {
         
         // HOLD LT -> Activate the automatic intake
         driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake).alongWith(intakeLEDs.run(() -> intakeLEDs.whiteSolid()))
+            .alongWith(deflector.deflectorOutFor(.2))
             .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
         
         // HOLD RT -> Drive in robot centric mode
@@ -105,7 +106,7 @@ public class RobotContainer {
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1500))
+            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1350))
             .whileTrue(deflector.deflectorOut())
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
         // Hold RB -> Long Shot
@@ -114,7 +115,7 @@ public class RobotContainer {
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
-        operatorController.rightTrigger().whileTrue(new Eject(intake));
+        operatorController.rightTrigger().whileTrue(new Eject(intake).onlyIf(() -> shooter.getRPM() > 500));
 
         // HOLD Y -> Raise the climber, release to climb
         operatorController.y().onTrue(

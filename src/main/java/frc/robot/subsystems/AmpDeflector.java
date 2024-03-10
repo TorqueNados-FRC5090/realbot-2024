@@ -37,6 +37,10 @@ public class AmpDeflector extends SubsystemBase{
         return this.runEnd(() -> goToPosition(11.25), () -> goToPosition(0));
     }
 
+    public Command deflectorOutFor(double seconds) {
+        return this.runEnd(() -> goToPosition(11.25), () -> goToPosition(0)).withTimeout(seconds);
+    }
+
     @Override // Called every 20ms
     public void periodic(){
         SmartDashboard.putNumber("Deflector Position", getPostion());

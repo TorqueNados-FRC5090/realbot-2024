@@ -2,7 +2,11 @@
   "robotWidth": 0.8636,
   "robotLength": 0.86,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "Center Paths",
+    "Amp Paths",
+    "Stage Paths"
+  ],
   "autoFolders": [
     "Center Autos",
     "Amp Autos",

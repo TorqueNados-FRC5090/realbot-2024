@@ -109,5 +109,7 @@ public class Shooter extends SubsystemBase{
 
         SmartDashboard.putNumber("Shooter Pivot Position", getPosition());
         SmartDashboard.putBoolean("Shooter at Target Position", atTargetPosition());
+
+        SmartDashboard.putBoolean("Ready to Shoot", readyToShoot());
     }
 }

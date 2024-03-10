@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": 15.255118703057796,
+      "rotationDegrees": 3.108823224741541,
       "rotateFast": false
     }
   ],
@@ -83,7 +83,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Center Paths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
