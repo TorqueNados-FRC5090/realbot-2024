@@ -37,6 +37,7 @@ public class RobotContainer {
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
     public final Blinkin shooterLEDs = new Blinkin(SHOOTER_LEDS_PORT);
     public final Blinkin intakeLEDs = new Blinkin(INTAKE_LEDS_PORT);
+    public final Candle candleLEDS = new Candle(2);
     public final AmpDeflector deflector = new AmpDeflector(AMP_DEFLECTOR_ID);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
