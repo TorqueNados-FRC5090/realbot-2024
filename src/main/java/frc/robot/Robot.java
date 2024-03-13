@@ -1,9 +1,5 @@
 package frc.robot;
 
-
-// Camera imports
-import edu.wpi.first.cameraserver.CameraServer;
-
 // Command imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,9 +18,6 @@ public class Robot extends TimedRobot {
     // for any initialization code.
     @Override
     public void robotInit() {
-        // Start the camera feed
-        CameraServer.startAutomaticCapture();
-
         // Construct objects
         robotContainer = new RobotContainer();
     }

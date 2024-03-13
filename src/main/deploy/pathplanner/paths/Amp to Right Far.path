@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6847127979970246,
-        "y": 6.729380601618346
+        "x": 0.7,
+        "y": 6.698083894980142
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2150295729162888,
-        "y": 7.138865706302841
+        "x": 4.880256903370949,
+        "y": 7.38052904677238
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.349504699009398,
-        "y": 6.99118255379368
+        "x": 7.840632824122791,
+        "y": 5.970826227366741
       },
       "prevControl": {
-        "x": 2.080989876265467,
-        "y": 7.06502413004826
+        "x": 7.285228004456686,
+        "y": 6.031381689502436
       },
       "nextControl": {
-        "x": 2.864919286943507,
-        "y": 6.8494435421118
+        "x": 8.184129523740017,
+        "y": 5.933374983425589
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.6847127979970246,
-        "y": 6.729380601618346
+        "x": 0.7,
+        "y": 6.698083894980142
       },
       "prevControl": {
-        "x": 1.335861243151058,
-        "y": 7.159004318008636
+        "x": 4.074712435139156,
+        "y": 7.541637940418737
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,26 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.05,
-      "rotationDegrees": 59.32271997820354,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 0,
-      "rotateFast": true
-    },
-    {
-      "waypointRelativePos": 2.0,
-      "rotationDegrees": 59.3,
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": -21.476790979540397,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pickup",
-      "waypointRelativePos": 0.0,
+      "name": "Pickup Piece",
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "parallel",
         "data": {
@@ -83,19 +73,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 58.09189306434691,
+    "rotation": 60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Amp Paths",
   "previewStartingState": {
-    "rotation": 59.80837703904242,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

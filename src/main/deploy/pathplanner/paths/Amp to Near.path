@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7048514097028195,
-        "y": 4.386588773177547
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0686327678961662,
-        "y": 3.9382435521627808
+        "x": 1.2303424549849247,
+        "y": 7.109451844738554
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0115924916534516,
-        "y": 4.076914099774146
+        "x": 2.349504699009398,
+        "y": 6.99118255379368
       },
       "prevControl": {
-        "x": 1.5576033028502472,
-        "y": 4.012319434957726
+        "x": 2.080989876265467,
+        "y": 7.06502413004826
       },
       "nextControl": {
-        "x": 2.631134708858865,
-        "y": 4.165064044413803
+        "x": 2.864919286943507,
+        "y": 6.8494435421118
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7048514097028195,
-        "y": 4.386588773177547
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": {
-        "x": 1.2350374250298048,
-        "y": 3.9105094426405076
+        "x": 1.351148445154032,
+        "y": 7.12962371639029
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,25 +46,25 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.1,
-      "rotationDegrees": -60.67346976562911,
+      "waypointRelativePos": 0.05,
+      "rotationDegrees": 59.32271997820354,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.2,
+      "waypointRelativePos": 1.0,
       "rotationDegrees": 0,
       "rotateFast": true
     },
     {
-      "waypointRelativePos": 2,
-      "rotationDegrees": -60.25511870305777,
-      "rotateFast": true
+      "waypointRelativePos": 1.95,
+      "rotationDegrees": 59.3,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Piece",
+      "name": "Pickup",
       "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
@@ -83,19 +83,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.85192815428694,
+    "rotation": 60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Amp Paths",
   "previewStartingState": {
-    "rotation": -60.25511870305783,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
