@@ -39,7 +39,7 @@ public class DriveWithLimelightTarget extends Command {
 
     @Override // Configure the PID controller
     public void initialize() {
-        headingController.setTolerance(1); // Allow for 2 degrees of rotational error
+        headingController.setTolerance(1); // Allow for 1 degree of rotational error
         headingController.enableContinuousInput(-180, 180); // -180 and 180 are the same heading
     }
 
@@ -53,8 +53,11 @@ public class DriveWithLimelightTarget extends Command {
 
         // Calculate the rotation instruction if limelight has a target
         if (limelight.hasValidTarget()) {
+            x = drivetrain.preprocessX(x);
+            y = drivetrain.preprocessY(y);
             rotation = headingController.calculate(limelight.getTargetX(), 0);
-            drivetrain.sendDrive(-x, -y, rotation, true);
+
+            drivetrain.sendDrive(x, y, rotation, true);
         }
         else {
             drivetrain.drive(x, y, rotation);

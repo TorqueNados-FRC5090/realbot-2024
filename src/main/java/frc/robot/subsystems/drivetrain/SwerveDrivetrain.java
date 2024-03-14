@@ -106,6 +106,36 @@ public class SwerveDrivetrain extends SubsystemBase {
         gyro.reset();
     }
 
+    /** Preprocess a drive instruction for driver controlled side-to-side movement
+     *  @param input The X input coming from a driver's joystick
+     *  @return The processed output ready to be sent to the drivetrain */
+    public double preprocessX(double input) {
+        double deadbanded = MathUtil.applyDeadband(input, .05);
+        double squared = -Math.signum(deadbanded) * Math.pow(deadbanded, 2);
+        double output = slewX.calculate(squared);
+
+        return output;
+    }
+    /** Preprocess a drive instruction for driver controlled forward/back movement
+     *  @param input The Y input coming from a driver's joystick
+     *  @return The processed output ready to be sent to the drivetrain */
+    public double preprocessY(double input) {
+        double deadbanded = MathUtil.applyDeadband(input, .05);
+        double squared = -Math.signum(deadbanded) * Math.pow(deadbanded, 2);
+        double output = slewY.calculate(squared);
+
+        return output;
+    }
+    /** Preprocess a drive instruction for driver controlled rotation
+     *  @param input The rotation input coming from a driver's joystick
+     *  @return The processed output ready to be sent to the drivetrain */
+    public double preprocessRot(double input) {
+        double deadbanded = MathUtil.applyDeadband(input, .1);
+        double squared = -Math.signum(deadbanded) * Math.pow(deadbanded, 2);
+        double output = slewRot.calculate(squared);
+
+        return output;
+    }
 
     /** Drives the robot. This is best used for driving with joysticks.
      *  For programmatic drivetrain control, consider using sendDrive instead. 
@@ -115,28 +145,12 @@ public class SwerveDrivetrain extends SubsystemBase {
      * @param inputRot The rotational instruction
     */
     public void drive(double inputX, double inputY, double inputRot) {
-        // If a translation input is between -.05 and .05, set it to 0
-        double deadbandedX = MathUtil.applyDeadband(Math.abs(inputX),
-            TRANSLATION_DEADBAND) * Math.signum(inputX);
-        double deadbandedY = MathUtil.applyDeadband(Math.abs(inputY),
-            TRANSLATION_DEADBAND) * Math.signum(inputY);
-
-        // If the rotation input is between -.1 and .1, set it to 0
-        double deadbandedRot = MathUtil.applyDeadband(Math.abs(inputRot),
-            ROTATION_DEADBAND) * Math.signum(inputRot);
-
-        // Square values after deadband while keeping original sign
-        deadbandedX = -Math.signum(deadbandedX) * Math.pow(deadbandedX, 2);
-        deadbandedY = -Math.signum(deadbandedY) * Math.pow(deadbandedY, 2);
-        deadbandedRot = -Math.signum(deadbandedRot) * Math.pow(deadbandedRot, 2);
-
-        // Apply a slew rate to the inputs, limiting the rate at which the robot changes speed
-        double slewedX = slewX.calculate(deadbandedX);
-        double slewedY = slewY.calculate(deadbandedY);
-        double slewedRot = slewRot.calculate(deadbandedRot);
+        double outX = preprocessX(inputX);
+        double outY = preprocessY(inputY);
+        double outRot = preprocessRot(inputRot);
 
         // Send the processed output to the drivetrain
-        sendDrive(slewedX, slewedY, slewedRot, true);
+        sendDrive(outX, outY, outRot, true);
     }
 
     /** Sends driving instructions to the motors that drive the robot.
