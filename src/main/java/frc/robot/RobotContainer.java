@@ -85,6 +85,9 @@ public class RobotContainer {
         
         // HOLD LT -> Activate the automatic intake
         driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake).alongWith(intakeLEDs.run(() -> intakeLEDs.whiteSolid()))
+            .alongWith(new DriveWithLimelightTarget(drivetrain, intakeLimelight,
+                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly())
+                .until(() -> intake.holdingPiece())
             .alongWith(deflector.deflectorOutFor(.15))
             .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
         
@@ -105,7 +108,7 @@ public class RobotContainer {
     private void setOperatorControls() {
         // Hold LT -> Prep the shooter for a point blank shot
         operatorController.leftTrigger()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
+            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 3000))
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
