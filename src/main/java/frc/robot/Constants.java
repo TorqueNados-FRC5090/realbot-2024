@@ -21,6 +21,10 @@ public final class Constants {
         public static final int OPERATOR_PORT = 1;
     }
 
+    public static final class LEDPorts {
+        public static final int LED_PORT = 2;
+    }
+
     /** IDs used by the swerve drivetrain.
         3X for turning, 4X for driving, 5X for abs encoders. */
     public static final class SwerveIDs {
@@ -126,7 +130,7 @@ public final class Constants {
             PURPLE(162, 18, 184),
             PINK(255, 166, 238),
             LIGHT_BLUE(125, 212, 255),
-            ORANGE(255, 120, 30),
+            ORANGE(180, 20, 0),
             WHITE(255, 255, 255);
 
             private int red;

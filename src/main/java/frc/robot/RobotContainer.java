@@ -2,6 +2,7 @@ package frc.robot;
 
 // Import constants
 import static frc.robot.Constants.ControllerPorts.*;
+import static frc.robot.Constants.LEDPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
@@ -34,7 +35,7 @@ public class RobotContainer {
     public final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
-    public final Candle candleLEDS = new Candle(2);
+    public final Candle candleLEDS = new Candle(LED_PORT);
     public final AmpDeflector deflector = new AmpDeflector(AMP_DEFLECTOR_ID);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
@@ -66,7 +67,7 @@ public class RobotContainer {
         // Set the intake to always be intaking by default
         intake.setDefaultCommand(new IntakePiece(intake));
         // Set the LEDs to intdicate the robot's state
-        candleLEDS.setDefaultCommand(new LEDControlCommand(intake, shooter, candleLEDS));
+        candleLEDS.setDefaultCommand(new LEDControlCommand(candleLEDS, this));
 
     }
 
