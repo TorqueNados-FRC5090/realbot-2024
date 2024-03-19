@@ -143,6 +143,23 @@ public final class Constants {
             public int getGreen() { return green; }
             public int getBlue() { return blue; }
         }
+
+        public static enum LEDStrip {
+            CANDLE(0, 8),
+            SHOOTER(8, 0),
+            INTAKE(0, 0);
+
+            private int startingIndex;
+            private int stripLength;
+
+            LEDStrip(int startingIndex, int stripLength){
+                this.startingIndex = startingIndex;
+                this.stripLength = stripLength;
+            }
+
+            public int getStartingIndex() { return startingIndex; }
+            public int getStripLength() { return stripLength; }
+        }
     }
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
