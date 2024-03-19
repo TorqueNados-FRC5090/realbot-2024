@@ -225,10 +225,10 @@ public final class Constants {
         public static final SwerveDriveKinematics SWERVE_KINEMATICS =
             new SwerveDriveKinematics(MODULE_TRANSLATIONS);
 
-        /** The max speed the robot is allowed to drive in m/sec */
-        public static final double MAX_TRANSLATION_SPEED = 4.5;
+        /** The max speed the robot is able to drive in m/sec */
+        public static final double MAX_TRANSLATION_SPEED = 5;
         /** The max speed the robot is allowed to spin in rads/sec */
-        public static final double MAX_ROTATION_SPEED = Math.PI;
+        public static final double MAX_ROTATION_SPEED = 2.5 * Math.PI; // 1.25 rotations/sec
         public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
             new TrapezoidProfile.Constraints(
                 MAX_ROTATION_SPEED, Math.PI * 2);
