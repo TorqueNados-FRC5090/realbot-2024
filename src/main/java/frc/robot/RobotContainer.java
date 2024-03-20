@@ -85,7 +85,10 @@ public class RobotContainer {
         
         // HOLD LT -> Activate the automatic intake
         driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake).alongWith(intakeLEDs.run(() -> intakeLEDs.whiteSolid()))
-            .alongWith(deflector.deflectorOutFor(.2))
+            .alongWith(new DriveWithLimelightTarget(drivetrain, intakeLimelight,
+                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly())
+                .until(() -> intake.holdingPiece())
+            .alongWith(deflector.deflectorOutFor(.15))
             .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
         
         // HOLD RT -> Drive in robot centric mode
@@ -96,13 +99,16 @@ public class RobotContainer {
         // HOLD A -> Lock robot heading straight
         driverController.a().whileTrue(new DriveWithHeading(drivetrain,
             () -> driverController.getLeftX(), () -> driverController.getLeftY(), 0));
+
+        driverController.rightBumper().whileTrue(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
+        () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly());
     }
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
         // Hold LT -> Prep the shooter for a point blank shot
         operatorController.leftTrigger()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
+            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 3000))
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()

@@ -99,7 +99,7 @@ public final class Constants {
             MINIMUM(-24), 
             POINT_BLANK(6),
             AMP_SHOT(11),
-            LONG_SHOT(19),
+            LONG_SHOT(20),
             MAXIMUM(31);
 
             private double angle;
