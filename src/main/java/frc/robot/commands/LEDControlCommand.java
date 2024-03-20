@@ -1,19 +1,23 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.Constants.LEDConstants.LEDColor;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Candle;
 
 public class LEDControlCommand extends Command {
-    private Intake intake;
-    private Blinkin blinkin;
-    private Shooter shooter;
-    public LEDControlCommand(Blinkin blinkin, Intake intake, Shooter shooter) {
-       this.intake = intake;
-       this.blinkin = blinkin;
-       this.shooter = shooter;
-       addRequirements(blinkin);
+    private final Intake intake;
+    private final Shooter shooter;
+    private final Candle candle;
+    public LEDControlCommand(Candle candle, RobotContainer robot) {
+        intake = robot.intake;
+        shooter = robot.shooter;
+        this.candle = candle;
+
+        addRequirements(candle);
     }
 
     @Override
@@ -24,12 +28,16 @@ public class LEDControlCommand extends Command {
     
     @Override
     public void execute() {
-     // This command should change colors for if there is an object
-        if (intake.holdingPiece() && shooter.readyToShoot() ) {
-            blinkin.greenSolid();}
+        // This command should change colors for if there is an object
+        if (DriverStation.isDisabled())
+            candle.setAll(LEDColor.RED);
+        else if (DriverStation.isAutonomousEnabled())
+            candle.setAll(LEDColor.PURPLE);
+        else if (intake.holdingPiece() && shooter.readyToShoot() ) {
+            candle.setAll(LEDColor.GREEN); }
         else if (intake.holdingPiece()) {
-            blinkin.orangeSolid(); }
-        else blinkin.blueSolid();
+            candle.setAll(LEDColor.ORANGE); }
+        else candle.setAll(LEDColor.BLUE);
     }
     @Override
     public boolean isFinished(){

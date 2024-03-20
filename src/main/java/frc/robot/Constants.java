@@ -21,10 +21,8 @@ public final class Constants {
         public static final int OPERATOR_PORT = 1;
     }
 
-    /** PWM ports used by blinkin LED controllers */
-    public static final class BlinkinPorts {
-        public static final int SHOOTER_LEDS_PORT = 0;
-        public static final int INTAKE_LEDS_PORT = 1;
+    public static final class LEDPorts {
+        public static final int CANDLE_ID = 2;
     }
 
     /** IDs used by the swerve drivetrain.
@@ -99,7 +97,7 @@ public final class Constants {
             MINIMUM(-24), 
             POINT_BLANK(6),
             AMP_SHOT(11),
-            LONG_SHOT(20),
+            LONG_SHOT(19),
             MAXIMUM(31);
 
             private double angle;
@@ -120,6 +118,51 @@ public final class Constants {
             ClimberPosition(double angle) { this.height = angle; } 
             /** The height in inches associated with this position */
             public double getHeight() { return height; }
+        }
+    }
+
+    public static final class LEDConstants {
+        public static enum LEDColor {
+            RED(255, 0, 0),
+            GREEN(25, 255, 0),
+            BLUE(0, 10, 181),
+            YELLOW(255, 100, 0),
+            PURPLE(162, 18, 184),
+            PINK(255, 166, 238),
+            LIGHT_BLUE(125, 212, 255),
+            ORANGE(180, 20, 0),
+            WHITE(255, 255, 255);
+
+            private int red;
+            private int green;
+            private int blue;
+             
+            LEDColor(int red, int green, int blue) {
+                this.red = red;
+                this.green = green;
+                this.blue = blue;
+            }
+
+            public int getRed() { return red; }
+            public int getGreen() { return green; }
+            public int getBlue() { return blue; }
+        }
+
+        public static enum LEDStrip {
+            CANDLE(0, 8),
+            SHOOTER(8, 60),
+            INTAKE(68, 31);
+
+            private int startingIndex;
+            private int stripLength;
+
+            LEDStrip(int startingIndex, int stripLength){
+                this.startingIndex = startingIndex;
+                this.stripLength = stripLength;
+            }
+
+            public int getStartingIndex() { return startingIndex; }
+            public int getStripLength() { return stripLength; }
         }
     }
 

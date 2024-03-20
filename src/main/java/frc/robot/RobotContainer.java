@@ -2,11 +2,11 @@ package frc.robot;
 
 // Import constants
 import static frc.robot.Constants.ControllerPorts.*;
+import static frc.robot.Constants.LEDPorts.*;
 import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
 import static frc.robot.Constants.AmpDeflectorIDs.*;
-import static frc.robot.Constants.BlinkinPorts.*;
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.Constants.ShooterConstants.ShooterPosition;
@@ -35,8 +35,7 @@ public class RobotContainer {
     public final Intake intake = new Intake(INTAKE_DRIVER_ID, INTAKE_ROTATOR_ID, INTAKE_LIMIT_ID);
     public final Shooter shooter = new Shooter(SHOOTER_RIGHT_ID, SHOOTER_LEFT_ID, SHOOTER_PIVOT_RIGHT_ID, SHOOTER_PIVOT_LEFT_ID);
     public final Climber climber = new Climber(CLIMBER_RIGHT_ID, CLIMBER_LEFT_ID);
-    public final Blinkin shooterLEDs = new Blinkin(SHOOTER_LEDS_PORT);
-    public final Blinkin intakeLEDs = new Blinkin(INTAKE_LEDS_PORT);
+    public final Candle candleLEDS = new Candle(CANDLE_ID);
     public final AmpDeflector deflector = new AmpDeflector(AMP_DEFLECTOR_ID);
     public final Limelight shooterLimelight = new Limelight("limelight-shooter");
     public final Limelight intakeLimelight = new Limelight("limelight-intake");
@@ -68,8 +67,8 @@ public class RobotContainer {
         // Set the intake to always be intaking by default
         intake.setDefaultCommand(new IntakePiece(intake));
         // Set the LEDs to intdicate the robot's state
-        shooterLEDs.setDefaultCommand(new LEDControlCommand(shooterLEDs, intake, shooter));
-        intakeLEDs.setDefaultCommand(new LEDControlCommand(intakeLEDs, intake, shooter));
+        candleLEDS.setDefaultCommand(new LEDControlCommand(candleLEDS, this));
+
     }
 
     /** Configures a set of control bindings for the robot's operator */
@@ -84,7 +83,7 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
         
         // HOLD LT -> Activate the automatic intake
-        driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake).alongWith(intakeLEDs.run(() -> intakeLEDs.whiteSolid()))
+        driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake)
             .alongWith(new DriveWithLimelightTarget(drivetrain, intakeLimelight,
                 () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly())
                 .until(() -> intake.holdingPiece())
