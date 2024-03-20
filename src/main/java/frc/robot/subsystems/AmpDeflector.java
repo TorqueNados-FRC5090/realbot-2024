@@ -9,6 +9,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.wrappers.GenericPID;
 
+import static frc.robot.Constants.AmpDeflectorConstants.DEFLECTOR_RATIO;
+import static frc.robot.Constants.AmpDeflectorConstants.DeflectorPosition;
+import static frc.robot.Constants.AmpDeflectorConstants.DeflectorPosition.*;
+
 public class AmpDeflector extends SubsystemBase{
 
     private CANSparkMax rotationMotor;
@@ -21,24 +25,21 @@ public class AmpDeflector extends SubsystemBase{
 
         ampPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.035);
         ampPID.activate(0);
+        ampPID.setRatio(DEFLECTOR_RATIO);
+        ampPID.setInputRange(MINIMUM.getAngle(), MAXIMUM.getAngle());
     }
 
     public double getPostion() { return ampPID.getMeasurement();}
 
-    public void goToPosition(double pos){
-        ampPID.activate(pos);
-    }
+    public void goToPosition(DeflectorPosition pos) { ampPID.activate(pos.getAngle()); }
+    public void goToPositionDeg(double pos) { ampPID.activate(pos); }
 
     public void stop(){
         ampPID.pause();
     }
 
     public Command deflectorOut() {
-        return this.runEnd(() -> goToPosition(11.25), () -> goToPosition(0));
-    }
-
-    public Command deflectorOutFor(double seconds) {
-        return this.runEnd(() -> goToPosition(11.25), () -> goToPosition(0)).withTimeout(seconds);
+        return this.runEnd(() -> goToPosition(AMP_SHOT), () -> goToPosition(MINIMUM));
     }
 
     @Override // Called every 20ms

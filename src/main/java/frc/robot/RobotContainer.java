@@ -7,6 +7,7 @@ import static frc.robot.Constants.IntakeIDs.*;
 import static frc.robot.Constants.ShooterIDs.*;
 import static frc.robot.Constants.ClimberIDs.*;
 import static frc.robot.Constants.AmpDeflectorIDs.*;
+
 import frc.robot.Constants.ClimberConstants.ClimberPosition;
 import frc.robot.Constants.IntakeConstants.IntakePosition;
 import frc.robot.Constants.ShooterConstants.ShooterPosition;
@@ -87,7 +88,6 @@ public class RobotContainer {
             .alongWith(new DriveWithLimelightTarget(drivetrain, intakeLimelight,
                 () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly())
                 .until(() -> intake.holdingPiece())
-            .alongWith(deflector.deflectorOutFor(.15))
             .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
         
         // HOLD RT -> Drive in robot centric mode
@@ -116,7 +116,7 @@ public class RobotContainer {
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
         // Hold RB -> Long Shot
         operatorController.rightBumper()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.LONG_SHOT, 4000))
+            .onTrue(new SetShooterState(shooter, ShooterPosition.LONG_SHOT, 4500))
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection

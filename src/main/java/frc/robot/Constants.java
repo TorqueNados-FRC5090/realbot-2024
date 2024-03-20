@@ -73,6 +73,8 @@ public final class Constants {
     /* -------------- SUBSYTEM CONSTANTS -------------- */
 
     public static final class IntakeConstants {
+        /** Converts intake pivot motor revolutions to degrees */
+        public static final double INTAKE_PIVOT_RATIO = .1125;
         public static enum IntakePosition {
             PICKUP(-214), 
             CLIMB(-90),
@@ -84,9 +86,6 @@ public final class Constants {
             /** @return The angle in degrees associated with this position */
             public double getAngle() { return angle; }
         }
-
-        /** Converts intake pivot motor revolutions to degrees */
-        public static final double INTAKE_PIVOT_RATIO = .1125;
     }
 
     /** Any constants needed by the shooter */
@@ -97,7 +96,7 @@ public final class Constants {
             MINIMUM(-24), 
             POINT_BLANK(6),
             AMP_SHOT(11),
-            LONG_SHOT(19),
+            LONG_SHOT(22.5),
             MAXIMUM(31);
 
             private double angle;
@@ -163,6 +162,21 @@ public final class Constants {
 
             public int getStartingIndex() { return startingIndex; }
             public int getStripLength() { return stripLength; }
+        }
+    }
+    
+    public static final class AmpDeflectorConstants {
+        /** Converts deflector motor revolutions to degrees */
+        public static final double DEFLECTOR_RATIO = 25.0 / 360.0;
+        public static enum DeflectorPosition {
+            MINIMUM(0), 
+            AMP_SHOT(168),
+            MAXIMUM(180);
+
+            private double degrees;
+            DeflectorPosition(double angle) { this.degrees = angle; } 
+            /** The angle in degrees associated with this position */
+            public double getAngle() { return degrees; }
         }
     }
 
