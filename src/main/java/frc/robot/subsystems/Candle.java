@@ -9,23 +9,22 @@ public class Candle extends SubsystemBase {
     public CANdle candle;
 
     /** Creates a CANdle
-     *  @param ID 
-     *  ID of the CANdle
+     *  @param ID CAN ID of the CANdle
      */
     public Candle(int ID){
         candle = new CANdle(ID);
     }
     
     /** Sets the LEDs to the selected color
-     *  @param color
+     *  @param color The {@link LEDColor} to use
      */
     public void setAll(LEDColor color) {
         candle.setLEDs(color.getRed(), color.getGreen(), color.getBlue());
     }
 
     /** Sets one LED strip to one color 
-     *  @param color
-     *  @param strip
+     *  @param color The {@link LEDColor} to use
+     *  @param strip The {@link LEDStrip} to change color
      */
     public void setStrip(LEDColor color, LEDStrip strip) {
         candle.setLEDs(color.getRed(), color.getGreen(), color.getBlue(), 0, 

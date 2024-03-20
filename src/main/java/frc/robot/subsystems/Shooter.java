@@ -33,12 +33,10 @@ public class Shooter extends SubsystemBase{
     public Shooter(int shooterRightID, int shooterLeftID, int pivotRightID, int pivotLeftID) {
         shooterLeader = new CANSparkFlex(shooterRightID, MotorType.kBrushless);
         shooterLeader.restoreFactoryDefaults();
-        shooterLeader.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
 
         shooterFollower = new CANSparkFlex(shooterLeftID, MotorType.kBrushless);
         shooterFollower.restoreFactoryDefaults();
         shooterFollower.follow(shooterLeader, true);
-        shooterFollower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
 
 
         shooterPID = new GenericPID(shooterLeader, ControlType.kVelocity, .00022, .0000005, 0);
