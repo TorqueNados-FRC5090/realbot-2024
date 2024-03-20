@@ -22,7 +22,7 @@ public final class Constants {
     }
 
     public static final class LEDPorts {
-        public static final int LED_PORT = 2;
+        public static final int CANDLE_ID = 2;
     }
 
     /** IDs used by the swerve drivetrain.
@@ -150,8 +150,8 @@ public final class Constants {
 
         public static enum LEDStrip {
             CANDLE(0, 8),
-            SHOOTER(8, 0),
-            INTAKE(0, 0);
+            SHOOTER(8, 60),
+            INTAKE(68, 31);
 
             private int startingIndex;
             private int stripLength;
