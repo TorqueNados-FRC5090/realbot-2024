@@ -71,7 +71,7 @@ public class Shooter extends SubsystemBase{
     public double getRPM() { return shooterPID.getMeasurement(); }
     /** @return The position of the shooter's pivot */
     public double getPosition() { return pivotPID.getMeasurement(); }
-
+    /** @return Whether the shooter is ready to shoot */
     public boolean readyToShoot() { return atOrAboveTargetSpeed() && atTargetPosition() && shooterPID.getSetpoint() > 0;}
 
     /** Activates the shooter PID
@@ -84,6 +84,7 @@ public class Shooter extends SubsystemBase{
         else
             shooterPID.activate(RPM);
     }
+    
     /** Stops the shooter */
     public void stopShooter() {
         shooterPID.pause();
@@ -95,6 +96,7 @@ public class Shooter extends SubsystemBase{
     public void goToPosition(ShooterPosition pos) {
         pivotPID.activate(pos.getAngle()); 
     }
+
     /** Stops the shooter */
     public void stopPivot() {
         pivotPID.pause();
