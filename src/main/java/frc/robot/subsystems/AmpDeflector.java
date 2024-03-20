@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +23,8 @@ public class AmpDeflector extends SubsystemBase{
         rotationMotor = new CANSparkMax(rotationID, MotorType.kBrushless);
         rotationMotor.restoreFactoryDefaults();
         rotationMotor.setInverted(true);
+        rotationMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
+        rotationMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500);
 
         ampPID = new GenericPID(rotationMotor, ControlType.kPosition, 0.035);
         ampPID.activate(0);
