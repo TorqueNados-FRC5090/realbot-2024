@@ -164,13 +164,13 @@ public final class Constants {
             public int getStripLength() { return stripLength; }
         }
     }
-    
+
     public static final class AmpDeflectorConstants {
         /** Converts deflector motor revolutions to degrees */
         public static final double DEFLECTOR_RATIO = 25.0 / 360.0;
         public static enum DeflectorPosition {
             MINIMUM(0), 
-            AMP_SHOT(168),
+            AMP_SHOT(165),
             MAXIMUM(180);
 
             private double degrees;
