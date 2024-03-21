@@ -96,8 +96,8 @@ public final class Constants {
             MINIMUM(-24), 
             POINT_BLANK(6),
             AMP_SHOT(11),
-            LONG_SHOT(22.5),
-            MAXIMUM(31);
+            LONG_SHOT(22),
+            MAXIMUM(26);
 
             private double angle;
             ShooterPosition(double angle) { this.angle = angle; } 

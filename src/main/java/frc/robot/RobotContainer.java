@@ -92,31 +92,26 @@ public class RobotContainer {
         
         // HOLD RT -> Drive in robot centric mode
         driverController.rightTrigger().onTrue(new InstantCommand(() -> drivetrain.setFieldCentric(false)))
-        .onFalse(new InstantCommand(() -> drivetrain.setFieldCentric(true)));
+            .onFalse(new InstantCommand(() -> drivetrain.setFieldCentric(true)));
         // HOLD X -> Lock the drivetrain for anti-defense
         driverController.x().whileTrue(new LockDrivetrain(drivetrain));
         // HOLD A -> Lock robot heading straight
         driverController.a().whileTrue(new DriveWithHeading(drivetrain,
             () -> driverController.getLeftX(), () -> driverController.getLeftY(), 0));
-
-        driverController.rightBumper().whileTrue(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
-        () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly());
     }
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
         // Hold LT -> Prep the shooter for a point blank shot
-        operatorController.leftTrigger()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 3000))
-            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+        operatorController.leftTrigger().whileTrue(new AimShooterAtSpeaker(shooterLimelight, shooter)
+            // Aim robot at target
+            .alongWith(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
+                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly()));
+
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
             .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1350))
             .whileTrue(deflector.deflectorOut())
-            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
-        // Hold RB -> Long Shot
-        operatorController.rightBumper()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.LONG_SHOT, 4500))
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
