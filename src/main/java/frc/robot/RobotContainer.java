@@ -86,9 +86,10 @@ public class RobotContainer {
         // HOLD LT -> Activate the automatic intake
         driverController.leftTrigger().whileTrue(new IntakeAutoPickup(intake)
             .alongWith(new DriveWithLimelightTarget(drivetrain, intakeLimelight,
-                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly())
+                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX(), false))
                 .until(() -> intake.holdingPiece())
             .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
+        
         
         // HOLD RT -> Drive in robot centric mode
         driverController.rightTrigger().onTrue(new InstantCommand(() -> drivetrain.setFieldCentric(false)))
@@ -104,14 +105,14 @@ public class RobotContainer {
     private void setOperatorControls() {
         // Hold LT -> Prep the shooter for a shot using limelight
         operatorController.leftTrigger()
-        .whileTrue(new AimShooterAtSpeaker(shooterLimelight, shooter).repeatedly()
+        .whileTrue(new AimShooterAtSpeaker(shooterLimelight, shooter, false)
             .alongWith(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
-                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly()))
+                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX(), false)))
         .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1350))
+            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1150))
             .whileTrue(deflector.deflectorOut())
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 

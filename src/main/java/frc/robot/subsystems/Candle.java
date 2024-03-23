@@ -16,6 +16,7 @@ public class Candle extends SubsystemBase {
     public Candle(int ID){
         candle = new CANdle(ID);
         candle.setStatusFramePeriod(CANdleStatusFrame.CANdleStatusFrame_Status_1_General, 500);
+        setAll(LEDColor.PURPLE);
     }
     
     /** Sets the LEDs to the selected color

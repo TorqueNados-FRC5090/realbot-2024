@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
     private NetworkTable table;
+    private double tx;
+    private double ty;
 
     /** Constructs a limelight
      *  @param tableName The name of the network table that the limelight is posting to.
@@ -18,9 +20,9 @@ public class Limelight extends SubsystemBase {
     /** @return Whether the limelight sees at least one valid target */
     public boolean hasValidTarget() { return table.getEntry("tv").getDouble(0) == 1; }
     /** @return The horizontal offset of the limelight's primary target in degrees */
-    public double getTargetX() { return table.getEntry("tx").getDouble(0); }
+    public double getTargetX() { return tx; }
     /** @return The vertical offset of the limelight's primary target in degrees */
-    public double getTargetY() { return table.getEntry("ty").getDouble(0); }
+    public double getTargetY() { return ty; }
     /** @return The of area the limelight's primary target expressed as % of the image */
     public double getTargetArea() { return table.getEntry("ta").getDouble(0); }
     /** @return The ID of the primary apriltag in view of the limelight */
@@ -47,5 +49,11 @@ public class Limelight extends SubsystemBase {
     public void setDriverMode(boolean on) {
         int state = on ? 1 : 0; // Convert boolean into setting number
         table.getEntry("camMode").setNumber(state);
+    }
+
+    @Override
+    public void periodic() {
+        tx = table.getEntry("tx").getDouble(0);
+        ty = table.getEntry("ty").getDouble(0);
     }
 }

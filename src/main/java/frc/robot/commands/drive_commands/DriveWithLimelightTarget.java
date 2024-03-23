@@ -15,6 +15,7 @@ public class DriveWithLimelightTarget extends Command {
     private final DoubleSupplier inputX;
     private final DoubleSupplier inputY;
     private final DoubleSupplier inputRot;
+    private final boolean ends;
     private final PIDController headingController;
     
     /** Constructs a DriveWithLimelightTarget command
@@ -25,14 +26,15 @@ public class DriveWithLimelightTarget extends Command {
      *  @param backupRotationInput The joystick that will be used to control rotation if limelight has no target */
     public DriveWithLimelightTarget(
             SwerveDrivetrain drivetrain, Limelight limelight,
-            DoubleSupplier translationInputX, DoubleSupplier translationInputY, DoubleSupplier backupRotationInput) {
+            DoubleSupplier translationInputX, DoubleSupplier translationInputY, DoubleSupplier backupRotationInput, boolean ends) {
 
         this.drivetrain = drivetrain;
         this.limelight = limelight;
         this.inputX = translationInputX;
         this.inputY = translationInputY;
         this.inputRot = backupRotationInput;
-        this.headingController = new PIDController(.009, 0, .00315);
+        this.ends = ends;
+        this.headingController = new PIDController(.008, 0, .0025);
         
         addRequirements(drivetrain);
     }
@@ -67,7 +69,7 @@ public class DriveWithLimelightTarget extends Command {
     // Command ends when robot is done rotating
     @Override
     public boolean isFinished() {
-        return headingController.atSetpoint();
+        return ends && headingController.atSetpoint();
     }
 
     // Runs when the command ends

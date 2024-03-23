@@ -59,10 +59,9 @@ public class AutonContainer {
     private void registerNamedCommands() {
         NamedCommands.registerCommand("RevShooter", new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 5000));
         NamedCommands.registerCommand("Shoot Preload", shootPreload());
-        NamedCommands.registerCommand("Intake", new IntakeAutoPickup(intake).withTimeout(3));
-        NamedCommands.registerCommand("Take Longshot", new DriveWithLimelightTarget(drivetrain, shooterLimelight, () -> 0, () -> 0, () -> 0)
-            .alongWith(new AimShooterAtSpeaker(shooterLimelight, shooter)).withTimeout(.9)
-            .andThen(new Eject(intake).withTimeout(.1)));
+        NamedCommands.registerCommand("AutoIntake", new IntakeAutoPickup(intake).withTimeout(3));
+        NamedCommands.registerCommand("Aim Longshot", new DriveWithLimelightTarget(drivetrain, shooterLimelight, () -> 0, () -> 0, () -> 0, true)
+            .alongWith(new AimShooterAtSpeaker(shooterLimelight, shooter, true)).withTimeout(1.5));
         NamedCommands.registerCommand("Shoot", new Eject(intake).withTimeout(.15));
     }
 
@@ -77,6 +76,7 @@ public class AutonContainer {
         chooser.addOption("Center Five Piece!!", getPPAuto("Center Five Piece!!"));
         chooser.addOption("Center 5.5 Piece", getPPAuto("Center Five and a Half Piece"));
         chooser.addOption("Stage Drive Late and Shoot", getPPAuto("Stage Drive Late and Shoot Preload"));
+        chooser.addOption("Stage Three Piece (Far Pieces Only)", getPPAuto("Stage Three Piece (Far Pieces Only)"));
         chooser.addOption("Stage 3.5 Piece", getPPAuto("Stage Three Piece and Claim Center"));
         return chooser;
     }

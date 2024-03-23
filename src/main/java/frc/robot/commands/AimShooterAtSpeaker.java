@@ -8,9 +8,11 @@ import frc.robot.subsystems.Shooter;
 public class AimShooterAtSpeaker extends Command {
     private final Shooter shooter;
     private final Limelight limelight;
-    public AimShooterAtSpeaker(Limelight limelight, Shooter shooter) {
+    private boolean ends;
+    public AimShooterAtSpeaker(Limelight limelight, Shooter shooter, boolean ends) {
         this.limelight = limelight;
         this.shooter = shooter;
+        this.ends = ends;
 
         addRequirements(shooter);
     }
@@ -20,14 +22,22 @@ public class AimShooterAtSpeaker extends Command {
     
     @Override
     public void execute() {
+        double targetSpeed;
+        double targetAngle;
+
         if (limelight.hasValidTarget()) {
-            shooter.goToAngle(-0.7634 * limelight.getTargetY() + 14.723);
-            shooter.setSpeed(5000);
+            targetAngle = -0.7634 * limelight.getTargetY() + 14.723;
+            targetSpeed = 5000;
         }
         else {
-            shooter.goToPosition(ShooterPosition.POINT_BLANK);
-            shooter.setSpeed(3500);
+            targetAngle = ShooterPosition.POINT_BLANK.getAngle();
+            targetSpeed = 3500;
         }
+
+        if (Math.abs(shooter.getPositionSetpoint() - targetAngle) > .2)
+            shooter.goToAngle(targetAngle);
+        if (Math.abs(shooter.getRPMSetpoint() - targetSpeed) > 100)
+            shooter.setSpeed(targetSpeed);
     }
 
     @Override
@@ -36,6 +46,6 @@ public class AimShooterAtSpeaker extends Command {
     @Override
     public boolean isFinished(){
         // This command should turn off the LED at the end of the game
-        return shooter.readyToShoot();
+        return ends && shooter.readyToShoot();
     }
 }
