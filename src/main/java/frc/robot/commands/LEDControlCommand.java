@@ -33,7 +33,7 @@ public class LEDControlCommand extends Command {
         // This command should change colors for if there is an object
         if (intake.holdingPiece() && shooterLimelight.getTargetY() <= -15.5)
             candle.setAll(LEDColor.RED);
-        else if (intake.holdingPiece() && shooter.readyToShoot() && shooterLimelight.hasValidTarget() && Math.abs(shooterLimelight.getTargetX()) < 5)
+        else if (intake.holdingPiece() && shooter.readyToShoot() && shooterLimelight.hasValidTarget())
             candle.setAll(LEDColor.GREEN);
         else if (intake.holdingPiece())
             candle.setAll(LEDColor.ORANGE);

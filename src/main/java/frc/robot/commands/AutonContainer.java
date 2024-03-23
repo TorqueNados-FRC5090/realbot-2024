@@ -62,7 +62,7 @@ public class AutonContainer {
         NamedCommands.registerCommand("AutoIntake", new IntakeAutoPickup(intake).withTimeout(3));
         NamedCommands.registerCommand("Aim Longshot", new DriveWithLimelightTarget(drivetrain, shooterLimelight, () -> 0, () -> 0, () -> 0, true)
             .alongWith(new AimShooterAtSpeaker(shooterLimelight, shooter, true)).withTimeout(1.5));
-        NamedCommands.registerCommand("Shoot", new Eject(intake).withTimeout(.15));
+        NamedCommands.registerCommand("Shoot", new Eject(intake, 1).withTimeout(.15));
     }
 
     public SendableChooser<Command> buildAutonChooser() {
@@ -90,7 +90,7 @@ public class AutonContainer {
     public Command shootPreload() {
         return new SequentialCommandGroup(
             new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 5000).withTimeout(.5),
-            new Eject(intake).withTimeout(.15));
+            new Eject(intake, 1).withTimeout(.15));
     }
 
     /** Returns a command that executes a pathplanner auto 

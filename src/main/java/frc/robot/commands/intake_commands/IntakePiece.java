@@ -7,9 +7,11 @@ import frc.robot.subsystems.Intake;
  *  use of intake.intake() as a default command */
 public class IntakePiece extends Command {
     private Intake intake;
+    private double speed;
     
-    public IntakePiece(Intake intake) {
+    public IntakePiece(Intake intake, double speed) {
         this.intake = intake;
+        this.speed = speed;
         addRequirements(intake);
     }
    
@@ -18,7 +20,7 @@ public class IntakePiece extends Command {
 
     @Override
     public void execute() {
-        intake.intake(.25);
+        intake.intake(speed);
     }
 
     

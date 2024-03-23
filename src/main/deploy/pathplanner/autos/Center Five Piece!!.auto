@@ -56,7 +56,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Left Near with Rotation"
+            "pathName": "Center to Center Far"
           }
         },
         {
@@ -74,7 +74,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Left Far"
+            "pathName": "Center to Left Near with Rotation"
           }
         },
         {

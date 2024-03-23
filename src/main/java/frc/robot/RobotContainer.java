@@ -66,7 +66,7 @@ public class RobotContainer {
     /** Configures a set of commands that will run by default without human operation */
     private void setDefaultCommands() {
         // Set the intake to always be intaking by default
-        intake.setDefaultCommand(new IntakePiece(intake));
+        intake.setDefaultCommand(new IntakePiece(intake, .25));
         // Set the LEDs to intdicate the robot's state
         candleLEDS.setDefaultCommand(new LEDControlCommand(candleLEDS, this));
 
@@ -90,7 +90,6 @@ public class RobotContainer {
                 .until(() -> intake.holdingPiece())
             .onlyIf(() -> shooter.getPosition() >= ShooterPosition.POINT_BLANK.getAngle()-1));
         
-        
         // HOLD RT -> Drive in robot centric mode
         driverController.rightTrigger().onTrue(new InstantCommand(() -> drivetrain.setFieldCentric(false)))
             .onFalse(new InstantCommand(() -> drivetrain.setFieldCentric(true)));
@@ -103,8 +102,13 @@ public class RobotContainer {
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // Hold LT -> Prep the shooter for a shot using limelight
+        // Hold LT -> Prep the shooter for a close shot
         operatorController.leftTrigger()
+            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+
+        // Hold RB -> Prep the shooter for a shot using limelight
+        operatorController.rightBumper()
         .whileTrue(new AimShooterAtSpeaker(shooterLimelight, shooter, false)
             .alongWith(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
                 () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX(), false)))
@@ -112,12 +116,17 @@ public class RobotContainer {
 
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
-            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1150))
+            .onTrue(new SetShooterState(shooter, ShooterPosition.AMP_SHOT, 1200))
             .whileTrue(deflector.deflectorOut())
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
-        operatorController.rightTrigger().whileTrue(new Eject(intake).onlyIf(() -> shooter.getRPM() > 500));
+        operatorController.rightTrigger().whileTrue(new Eject(intake, 1).onlyIf(() -> shooter.getRPM() > 500));
+
+        operatorController.a().whileTrue(new SequentialCommandGroup(
+            new Eject(intake, .25).withTimeout(.1),
+            new IntakePiece(intake, .35).withTimeout(.1) 
+        ).repeatedly());
 
         // HOLD Y -> Raise the climber, release to climb
         operatorController.y().onTrue(
