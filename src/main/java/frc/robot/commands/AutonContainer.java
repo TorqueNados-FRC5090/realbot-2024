@@ -59,7 +59,7 @@ public class AutonContainer {
     private void registerNamedCommands() {
         NamedCommands.registerCommand("RevShooter", new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 5000));
         NamedCommands.registerCommand("Shoot Preload", shootPreload());
-        NamedCommands.registerCommand("Intake", new IntakeAutoPickup(intake).withTimeout(3));
+        NamedCommands.registerCommand("AutoIntake", new IntakeAutoPickup(intake).withTimeout(3));
         NamedCommands.registerCommand("Take Longshot", new DriveWithLimelightTarget(drivetrain, shooterLimelight, () -> 0, () -> 0, () -> 0)
             .alongWith(new AimShooterAtSpeaker(shooterLimelight, shooter)).withTimeout(.9)
             .andThen(new Eject(intake).withTimeout(.1)));

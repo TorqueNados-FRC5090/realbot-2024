@@ -14,25 +14,37 @@
         {
           "type": "named",
           "data": {
-            "name": "RevShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 8.0
+            "name": "Shoot Preload"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Stage Right Near Far Shot"
+            "pathName": "Stage to Right Far"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Aim Longshot"
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Stage to Left Far"
+          }
+        },
+        {
+          "type": "wait", 
+          "data": {
+            "waitTime": 0.2
           }
         },
         {

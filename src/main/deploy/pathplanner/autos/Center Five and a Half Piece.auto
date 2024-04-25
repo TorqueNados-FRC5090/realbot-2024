@@ -30,6 +30,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Center Near Shoot Far"
@@ -38,7 +44,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Take Longshot"
+            "name": "Aim Longshot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
@@ -50,7 +62,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Take Longshot"
+            "name": "Aim Longshot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
@@ -62,7 +80,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Take Longshot"
+            "name": "Aim Longshot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
