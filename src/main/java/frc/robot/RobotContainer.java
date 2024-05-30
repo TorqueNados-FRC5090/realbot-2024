@@ -102,12 +102,17 @@ public class RobotContainer {
 
     /** Configures a set of control bindings for the robot's operator */
     private void setOperatorControls() {
-        // Hold LT -> Prep the shooter for a shot using limelight
+        // Hold LT -> Prep the shooter for a point-blank shot
         operatorController.leftTrigger()
-        .whileTrue(new AimShooterAtSpeaker(shooterLimelight, shooter).repeatedly()
-            .alongWith(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
-                () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly()))
-        .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+            .onTrue(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 4000))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
+
+        // Hold RB -> Prep the shooter for a shot using limelight
+        operatorController.rightBumper()
+            .whileTrue(new AimShooterAtSpeaker(shooterLimelight, shooter).repeatedly()
+                .alongWith(new DriveWithLimelightTarget(drivetrain, shooterLimelight,
+                    () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX()).repeatedly()))
+            .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // Hold LB -> Prep shooter for amp shot
         operatorController.leftBumper()
