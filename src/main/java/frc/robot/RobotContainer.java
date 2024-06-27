@@ -66,7 +66,7 @@ public class RobotContainer {
     /** Configures a set of commands that will run by default without human operation */
     private void setDefaultCommands() {
         // Set the intake to always be intaking by default
-        intake.setDefaultCommand(new IntakePiece(intake));
+        intake.setDefaultCommand(new IntakePiece(intake, .25));
         // Set the LEDs to intdicate the robot's state
         candleLEDS.setDefaultCommand(new LEDControlCommand(candleLEDS, this));
 
@@ -121,7 +121,15 @@ public class RobotContainer {
             .onFalse(new SetShooterState(shooter, ShooterPosition.POINT_BLANK, 0));
 
         // HOLD RT -> Drive the intake outward for piece ejection
-        operatorController.rightTrigger().whileTrue(new Eject(intake).onlyIf(() -> shooter.getRPM() > 500));
+        operatorController.rightTrigger().whileTrue(new Eject(intake, 1).onlyIf(() -> shooter.getRPM() > 500));
+
+        // HOLD A -> Repeatedly pulse the intake in and out for piece adjustment
+        operatorController.a().whileTrue(
+            new SequentialCommandGroup(
+                new Eject(intake, .4).withTimeout(.07),
+                new IntakePiece(intake, .4).withTimeout(.07)
+            ).repeatedly()
+        );
 
         // HOLD Y -> Raise the climber, release to climb
         operatorController.y().onTrue(

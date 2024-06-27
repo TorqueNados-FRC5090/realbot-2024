@@ -6,16 +6,18 @@ import frc.robot.subsystems.Intake;
 /** This command exists largely to use intake.eject while requiring the intake */
 public class Eject extends Command{
     private Intake intake;
+    private double speed;
 
     /**  */
-    public Eject(Intake intake) {
+    public Eject(Intake intake, double speed) {
         this.intake = intake;
+        this.speed = speed;
         addRequirements(intake);
     }
 
     @Override // Attempt to eject any held piece
     public void initialize() {
-        intake.eject(1);
+        intake.eject(speed);
     }
 
     @Override // Do nothing until command ends
